@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>EnviroCar Statistics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="shortcut icon" href="https://52north.org/templates/52n-2012/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
+  </head>
+  <body>  
+    <div id="map">
+      <script language="JavaScript" src="js/functions.js"></script>
+    </div>
+    <div id="menu2">
+	</div>
+    <div id="menu">
+      <ul>
+        <li>
+          <input type="checkbox"/>
+          <h2>Radius</h2>
+          <p>In Metern: 
+          <input type="number" min="1" max="500" step="1" id="buffer" />
+          <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
+        </li>
+        <li>  
+		  <input type="checkbox" />		
+            <h2>Zeitraum</h2>
+			<p>Tag:
+				<!--<input type="text" id="day" placeholder="z.B. Montag"> </br>-->
+				 <select id="day">
+					<option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
+					<option value="Samstag">Samstag</option>
+					<option value="Sonntag">Sonntag</option>
+				</select></br>		
+			   von:<input type="text" id="timeWindow1" placeholder="z.B. 6">
+				bis: <input type="text" id="timeWindow2" placeholder="z.B. 12">
+			</p>
+        </li>
+      </ul>
+    </div>	
+	<div id="values">
+	<input type="button" id="clear" onclick="remCon()" value="Inhalt löschen" style="position: absolute; left: 43%; top: 4%; "/>
+	<a id="download" style="position: absolute; left: 62%; top:4%; " class="button"><input type="button" value="Tabelle runterladen"\></a>
+	<input type="button" id="close" onclick="hide()" value="Schließen" style="position: absolute; left: 86%; top: 4%; " />
+	</div>
+	<div id ="values2" style="border:solid #5bbde8 2px;">
+	</div>
+	<div id="loader" style="background:url(loader/gears.gif) no-repeat center center;width:100%;height:100%;">	
+	</div>
+  </body>
+</html>
