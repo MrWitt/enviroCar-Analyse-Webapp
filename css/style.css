@@ -61,9 +61,9 @@ ul , li {
 
 #menu2{
 	position: absolute;
-	height:40%;
+	height:44%;
 	width: 19%;
-	top: 64%;
+	top: 60%;
 	left: 2%;
 	z-index:1;
 	background-color: rgba(255, 255, 255,0.4);
@@ -73,9 +73,9 @@ ul , li {
 #menu
 {
 	position: absolute;
-	height:40%;
+	height:44%;
 	width: 19%;
-	top: 64%;
+	top: 60%;
 	left: 2%;
 	z-index:2;
 }
