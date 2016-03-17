@@ -41,18 +41,20 @@
 		
 		
 		function loadStats(){
-			$( "#loader" ).show( "slow" );
 			bufVal = document.getElementById('buffer').value;
 			day = document.getElementById('day').value;
 			timeWindowStart = document.getElementById('timeWindow1').value;
 			timeWindowEnd = document.getElementById('timeWindow2').value;
-			 if ((bufVal.length)==0){
-			 alert("Bitte bestimmen Sie den Radius!");
-			 $( "#loader" ).hide( "slow" );
-			 return;
-			 }else{
-			
+			if(timeWindowStart.length == 0 || timeWindowEnd.length == 0 ){
+				timeWindowStart = 0;
+				timeWindowEnd = 0;
+			}
+			if ((bufVal.length)==0){
+				alert("Bitte bestimmen Sie den Radius!");
+			}else{
+		$( "#loader" ).show( "slow" );
 		$.get("http://localhost:8080/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT("+latlng+")@mimeType=application/wkt;bufferSize="+bufVal+";day="+day+";timeWindowStart="+timeWindowStart+";timeWindowEnd="+timeWindowEnd+"&RawDataOutput=result@mimeType=application/csv", function(data) {
+		console.log("http://localhost:8080/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT("+latlng+")@mimeType=application/wkt;bufferSize="+bufVal+";day="+day+";timeWindowStart="+timeWindowStart+";timeWindowEnd="+timeWindowEnd+"&RawDataOutput=result@mimeType=application/csv");
 		var download = "http://localhost:8080/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT("+latlng+")@mimeType=application/wkt;bufferSize="+bufVal+";day="+day+";timeWindowStart="+timeWindowStart+";timeWindowEnd="+timeWindowEnd+"&RawDataOutput=result@mimeType=application/csv";
 			document.getElementById("download").setAttribute("href",download);
 		// start the table
@@ -87,7 +89,7 @@
 
 		})
 		.done(function() {
-			show();
+			display();
 			})
 		.fail(function() {
 			alert( "error" );
@@ -117,7 +119,7 @@
 		remCon();
 		}
 		
-		function show(){
+		function display(){
 		$( "#values" ).show( "slow" );
 		$( "#values2" ).show( "slow" );
 		$( "#loader" ).hide( "slow" );

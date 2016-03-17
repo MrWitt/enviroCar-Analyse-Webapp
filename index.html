@@ -18,18 +18,23 @@
 	</div>
     <div id="menu">
       <ul>
-        <li>
-          <input type="checkbox"/>
+        <li>      
           <h2>Radius</h2>
           <p>In Metern: 
           <input type="number" min="1" max="500" step="1" id="buffer" />
           <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
         </li>
         <li>  
-		  <input type="checkbox" />		
-            <h2>Zeitraum</h2>
+		  	<!--tooltip-->
+			<a class="tooltip" style="z-index:3; position: absolute; left: 85%; top:13%; ">
+				<h2 style="position: absolute; left: 28%; top:-25%;">?</h2>
+				<span>
+					<strong>Zeitfenster</strong><br />
+					Erfolgt im optionalen Zeitfenster keine Eingabe, so werden vorgefertigte Zeitabschnitte, z.B ... ausgegeben. 
+				</span>
+			</a>	  
+            <h2>Zeitfenster</h2>
 			<p>Tag:
-				<!--<input type="text" id="day" placeholder="z.B. Montag"> </br>-->
 				 <select id="day">
 					<option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
 					<option value="Samstag">Samstag</option>
