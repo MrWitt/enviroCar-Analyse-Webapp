@@ -66,7 +66,7 @@ ul , li {
 	top: 60%;
 	left: 2%;
 	z-index:1;
-	background-color: rgba(255, 255, 255,0.4);
+	background-color: rgba(255, 255, 255,0.8);
 }
 
 
@@ -87,7 +87,7 @@ ul , li {
 	top: 50%;
 	left: 65%;
 	z-index:3;
-	background-color: rgba(255, 255, 255,0.5);
+	background-color: rgba(255, 255, 255,0.8);
 	display: none;
 	
 }
