@@ -1,132 +1,135 @@
-		var popup = L.popup();
-		var bufVal;
-		var latlng;
-		var day;
-		var timeWindowStart;
-		var timeWindowEnd;
-		var download;
-		
-		var map = L.map('map',{ zoomControl: false }).setView([51.40, 7.40], 9);
-		
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-				'Imagery <a href="http://mapbox.com">Mapbox</a>',
-			id: 'mapbox.streets'
-		}).addTo(map);
-		
-		var speedTracks = L.tileLayer.wms("http://ags.dev.52north.org:6080/arcgis/services/enviroCar/aggregation/MapServer/WMSServer", {
-			layers: 0,
-			format: 'image/png',
-			transparent: true,
-			attribution: "EnviroCar Tracks"
-		}).addTo(map);
-		
+var popup = L.popup();
+var bufVal;
+var latlng;
+var day;
+var timeWindowStart;
+var timeWindowEnd;
+var download;
+var WMS = "http://ags.52north.org:6080";
+var WPS = "http://localhost:8080";
 
-		map.addControl(new L.Control.Layers({},{'EnviroCar Tracks ': speedTracks},{collapsed:false}));
-		
+var map = L.map('map', {
+		zoomControl : false
+}).setView([51.40, 7.40], 9);
 
-		function onMapClick(e) {
-			popup
-				/*.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(map);*/
-			latlng = e.latlng.lat+" "+e.latlng.lng;
-			loadStats();
-		}
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+	maxZoom : 18,
+	attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+	'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+	'Imagery <a href="http://mapbox.com">Mapbox</a>',
+	id : 'mapbox.streets'
+}).addTo(map);
 
-		map.on('click', onMapClick);
-		
-		
-		
-		function loadStats(){
-			bufVal = document.getElementById('buffer').value;
-			day = document.getElementById('day').value;
-			timeWindowStart = document.getElementById('timeWindow1').value;
-			timeWindowEnd = document.getElementById('timeWindow2').value;
-			if(timeWindowStart.length == 0 || timeWindowEnd.length == 0 ){
-				timeWindowStart = 0;
-				timeWindowEnd = 0;
-			}
-			if ((bufVal.length)==0){
-				alert("Bitte bestimmen Sie den Radius!");
-			}else{
-		$( "#loader" ).show( "slow" );
-		$.get("http://localhost:8080/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT("+latlng+")@mimeType=application/wkt;bufferSize="+bufVal+";day="+day+";timeWindowStart="+timeWindowStart+";timeWindowEnd="+timeWindowEnd+"&RawDataOutput=result@mimeType=application/csv", function(data) {
-		console.log("http://localhost:8080/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT("+latlng+")@mimeType=application/wkt;bufferSize="+bufVal+";day="+day+";timeWindowStart="+timeWindowStart+";timeWindowEnd="+timeWindowEnd+"&RawDataOutput=result@mimeType=application/csv");
-		var download = "http://localhost:8080/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT("+latlng+")@mimeType=application/wkt;bufferSize="+bufVal+";day="+day+";timeWindowStart="+timeWindowStart+";timeWindowEnd="+timeWindowEnd+"&RawDataOutput=result@mimeType=application/csv";
-			document.getElementById("download").setAttribute("href",download);
-		// start the table
-		var html = '<table >';
+var speedTracks = L.tileLayer.wms(WMS + "/arcgis/services/enviroCar/aggregation/MapServer/WMSServer", {
+		layers : 0,
+		format : 'image/png',
+		transparent : true,
+		attribution : "EnviroCar Tracks"
+	}).addTo(map);
 
-		// split into lines
-		var rows = data.split("\n");
+map.addControl(new L.Control.Layers({}, {
+		'EnviroCar Tracks ' : speedTracks
+	}, {
+		collapsed : false
+	}));
 
-		// parse lines
-		rows.forEach( function getvalues(ourrow) {
+function onMapClick(e) {
+	popup
+	/*.setLatLng(e.latlng)
+	.setContent("You clicked the map at " + e.latlng.toString())
+	.openOn(map);*/
+	latlng = e.latlng.lat + " " + e.latlng.lng;
+	loadStats();
+}
 
-		// start a table row
-		html += "<tr>";
+map.on('click', onMapClick);
 
-		// split line into columns
-		var columns = ourrow.split(";");
+function loadStats() {
+	bufVal = document.getElementById('buffer').value;
+	day = document.getElementById('day').value;
+	timeWindowStart = document.getElementById('timeWindow1').value;
+	timeWindowEnd = document.getElementById('timeWindow2').value;
+	if (timeWindowStart.length == 0 || timeWindowEnd.length == 0) {
+		timeWindowStart = 0;
+		timeWindowEnd = 0;
+	}
+	if ((bufVal.length) == 0) {
+		alert("Bitte bestimmen Sie den Radius!");
+	} else {
+		$("#loader").show("slow");
+		$.get(WPS + "/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + "&RawDataOutput=result@mimeType=application/csv", function (data) {
+			console.log(WPS + "/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + "&RawDataOutput=result@mimeType=application/csv");
+			var download = WPS + "/envirocar-wps/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + "&RawDataOutput=result@mimeType=application/csv";
+			document.getElementById("download").setAttribute("href", download);
+			// start the table
+			var html = '<table >';
 
-		html += "<td>" + columns[0] + " " + "</td>";
-		html += "<td>" + columns[1] + " " + "</td>";
-		html += "<td>" + columns[2] + " " + "</td>";
-		html += "<td>" + columns[3] + " " + "</td>";
+			// split into lines
+			var rows = data.split("\n");
 
-		// close row
-		html += "</tr>";
-		})
-		// close table
-		html += "</table>";
+			// parse lines
+			rows.forEach(function getvalues(ourrow) {
 
-		// insert into div
-		
-		$('#values2').append(html);
+				// start a table row
+				html += "<tr>";
 
-		})
-		.done(function() {
-			display();
+				// split line into columns
+				var columns = ourrow.split(";");
+
+				html += "<td>" + columns[0] + " " + "</td>";
+				html += "<td>" + columns[1] + " " + "</td>";
+				html += "<td>" + columns[2] + " " + "</td>";
+				html += "<td>" + columns[3] + " " + "</td>";
+
+				// close row
+				html += "</tr>";
 			})
-		.fail(function() {
-			alert( "error" );
-			$( "#loader" ).hide( "slow" );
-			});
-			 }
-		};
-		
-		function setCirc(){
-		bufVal = document.getElementById('buffer').value;	
-				filterCircle.setRadius(bufVal);
-		}
-		
-		var filterCircle = L.circle(L.latLng(0, 0), 0, {
-		opacity: 1,
-		weight: 1,
-		fillOpacity: 0.4
-		}).addTo(map);
-		
-		map.on('mousemove', function(e) {
-		filterCircle.setLatLng(e.latlng);
+			// close table
+			html += "</table>";
+
+			// insert into div
+
+			$('#values2').append(html);
+
+		})
+		.done(function () {
+			display();
+		})
+		.fail(function () {
+			alert("error");
+			$("#loader").hide("slow");
 		});
-		
-		function hide(){
-		$( "#values" ).hide( "slow" );
-		$( "#values2" ).hide( "slow" );
-		remCon();
-		}
-		
-		function display(){
-		$( "#values" ).show( "slow" );
-		$( "#values2" ).show( "slow" );
-		$( "#loader" ).hide( "slow" );
-		
-		}
-		
-		function remCon(){
-		$( "#values2" ).empty()
-		}
-		
+	}
+};
+
+function setCirc() {
+	bufVal = document.getElementById('buffer').value;
+	filterCircle.setRadius(bufVal);
+}
+
+var filterCircle = L.circle(L.latLng(0, 0), 0, {
+		opacity : 1,
+		weight : 1,
+		fillOpacity : 0.4
+	}).addTo(map);
+
+map.on('mousemove', function (e) {
+	filterCircle.setLatLng(e.latlng);
+});
+
+function hide() {
+	$("#values").hide("slow");
+	$("#values2").hide("slow");
+	remCon();
+}
+
+function display() {
+	$("#values").show("slow");
+	$("#values2").show("slow");
+	$("#loader").hide("slow");
+
+}
+
+function remCon() {
+	$("#values2").empty()
+}
