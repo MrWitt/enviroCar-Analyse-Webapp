@@ -10,7 +10,7 @@ var WMS = "http://ags.52north.org:6080";
 var WPS = "http://processing.envirocar.org:8080/wps";
 
 var map = L.map('map', {
-		zoomControl : false
+		zoomControl : true
 }).setView([51.40, 7.40], 9);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
