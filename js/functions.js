@@ -6,7 +6,7 @@ var timeWindowStart;
 var timeWindowEnd;
 var download;
 var WMS = "http://ags.52north.org:6080";
-/* must not end with slash*/
+/* must not end with slash */
 var WPS = "http://processing.envirocar.org:8080/wps";
 
 var map = L.map('map', {
@@ -120,14 +120,14 @@ map.on('mousemove', function (e) {
 });
 
 function hide() {
-	$("#values").hide("slow");
-	$("#values2").hide("slow");
+	$("#values").slideToggle('slow');
+	$("#values2").slideToggle('slow');
 	remCon();
 }
 
 function display() {
-	$("#values").show("slow");
-	$("#values2").show("slow");
+	$("#values").slideToggle('slow');
+	$("#values2").slideToggle('slow');
 	$("#loader").hide("slow");
 
 }
