@@ -1,4 +1,4 @@
-﻿*{
+*{
 	/* A universal CSS reset */
 	margin:0;
 	padding:0;
@@ -6,6 +6,7 @@
 
 html, body {
   height: 100%;
+  width: 100%;
 }
 
 body {
@@ -33,10 +34,12 @@ body {
 }
 
 input[type=number]{
-width: 25%;
+position: absolute;
+width: 10%;
 }
 
 input[type=text]{
+position: absolute;
 width: 30%;
 }
 
@@ -45,6 +48,7 @@ input[type=button]{
 	display:inline-block;
 	cursor:pointer;	
 	opacity:1;
+    font-size: 0.8vw;
 }
 
 input[type=button]:hover{
@@ -60,7 +64,7 @@ ul , li {
 }
 
 #menu2{
-	position: absolute;
+	position: fixed;
 	height:44%;
 	width: 19%;
 	top: 60%;
@@ -72,7 +76,7 @@ ul , li {
 
 #menu
 {
-	position: absolute;
+	position: fixed;
 	height:44%;
 	width: 19%;
 	top: 60%;
@@ -122,9 +126,9 @@ ul , li {
 }
 
 h2 {
-  font-size: 19px;
-  line-height: 34px;
-  font-weight: 300;
+  font-weight: 500;
+  font-size: 1.1vw;
+  line-height: 1vw;
   letter-spacing: 1px;
   display: block;
   margin: 0;
@@ -132,8 +136,9 @@ h2 {
 }
 
 p {
-  font-size: 14px;
-  line-height: 26px;
+  
+  font-size: 1vw;
+  line-height: 1.6vw;;
   letter-spacing: 1px;
   position: relative;
   overflow: hidden;
@@ -246,7 +251,7 @@ tr:hover {background-color: #f5f5f5}
 
 /*Tooltip*/
 
-a.tooltip {outline:none; border: 2px solid #000; background: #66c5e4; border-radius: 15px; width: 9%; height: 16%;}
+a.tooltip {outline:none; border: 2px solid #000; background: #66c5e4; border-radius: 0px; width: 1.2vw; height: 1.2vw;}
 a.tooltip strong {line-height:30px;}
 a.tooltip:hover {text-decoration:none;cursor:pointer} 
 a.tooltip span {

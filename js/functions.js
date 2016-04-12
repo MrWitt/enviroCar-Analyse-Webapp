@@ -1,4 +1,3 @@
-var popup = L.popup();
 var bufVal;
 var latlng;
 var day;
@@ -19,6 +18,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	//id : 'mapbox.light'
 }).addTo(map);
 
+var popup = L.popup();
 var speedTracks = L.tileLayer.wms(WMS + "/arcgis/services/enviroCar/aggregation/MapServer/WMSServer", {
 		layers : 0,
 		format : 'image/png',
@@ -88,7 +88,7 @@ function loadStats() {
 			html += "</table>";
 
 			// insert into div
-
+            remCon();
 			$('#values2').append(html);
 
 		})
@@ -118,14 +118,14 @@ map.on('mousemove', function (e) {
 });
 
 function hide() {
-	$("#values").slideToggle('slow');
-	$("#values2").slideToggle('slow');
+	$("#values").hide('slow');
+	$("#values2").hide('slow');
 	remCon();
 }
 
 function display() {
-	$("#values").slideToggle('slow');
-	$("#values2").slideToggle('slow');
+	$("#values").show('slow');
+	$("#values2").show('slow');
 	$("#loader").hide("slow");
 
 }
