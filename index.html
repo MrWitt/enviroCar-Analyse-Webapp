@@ -6,9 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link rel="shortcut icon" href="https://52north.org/templates/52n-2012/favicon.ico" type="image/x-icon" />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
+    <script>
+                $(function() {
+                    $( "#dateStart" ).datepicker();
+                    $( "#dateEnd" ).datepicker();
+                });
+   </script>
   </head>
   <body>  
     <div id="map">
@@ -24,7 +33,7 @@
           <input type="number" min="1" max="1000" step="1" id="buffer" value="20"/> m
           <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
         </li>
-        <li>  
+        <li> 
 		  	<!--tooltip-->
 			<a class="tooltip" style="z-index:3; position: absolute; left: 85%; top:8%; text-align:center; ">
                 ?
@@ -33,15 +42,25 @@
 					Erfolgt im optionalen Zeitfenster keine Eingabe, so werden vorgefertigte Zeitabschnitte (6-10Uhr,10-15Uhr...) ausgegeben. 
 				</span>
 			</a>	  
-            <h2>Zeitfenster</h2>
+            <h2>Zeitfenster<input type="checkbox" class="zeit" id="Zeitfenster" /></h2>
 			<p>Tag:
 				 <select id="day">
+                    <option value="null">Auswahl</option>
 					<option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
 					<option value="Samstag">Samstag</option>
 					<option value="Sonntag">Sonntag</option>
 				</select></p>	
-				<p>Optional von: <input type="text" id="timeWindow1" placeholder="z.B. 6 Uhr"></br>				
-			   bis: <input type="text" id="timeWindow2" placeholder="z.B. 12 Uhr"></p>
+            <p>Optional von <input type="text" id="timeWindow1" placeholder="z.B. 6"/>			
+                bis <input type="text" id="timeWindow2" placeholder="z.B. 12"/>Uhr</p>
+        </li>
+        <li>
+            <h2>Zeitfenster 2<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
+            <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>
+            <button onclick="check()">Try it</button>
+            <input type="checkbox" class="example" />
+<input type="checkbox" class="example" />
+<input type="checkbox" class="example" />
+<input type="checkbox" class="example" />
         </li>
       </ul>
     </div>	
@@ -60,8 +79,7 @@
 			<input type="checkbox" id="punch" class="toggle">
 			<label for="punch">Information</label>
 		<div>
-			<p>Diese Anwendung ermöglicht, eine Übersicht von Tracks und Durchschnittsgeschwindigkeiten je Tag und Zeitfenster,
-			 im gewähltem Gebiet zu berechnen. Hierfür muss lediglich ein Zeitfenster und eine feste Gebietsgröße angegeben werden. Die Berechnungen werden auch als .csv-Datei zur Verfügung gestellt. Mehr zum EnviroCar Projekt gibt es <a href="https://envirocar.org/">hier</a>.<p>
+			<p>Diese Anwendung ermöglicht unter Angabe eines Zeitfensters und einer Gebietsgröße, die durchschnittlichen Geschwindigkeiten in einem von Ihnen bestimmten Gebiet zu berechnen und als .csv-Datei zur Verfügung zu stellen. Mehr zum EnviroCar Projekt gibt es <a href="https://envirocar.org/">hier</a>.<p>
 		</div>
 		</div>
 	</div>
