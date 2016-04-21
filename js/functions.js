@@ -8,9 +8,9 @@ var dateStart;
 var dateEnd;
 var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag"
 var WMS = "http://ags.52north.org:6080";
-/* must not end with slash 
-var WPS = "http://processing.envirocar.org:8080/wps";*/
-var WPS = "http://localhost:8080/envirocar-wps";
+/* must not end with slash */
+var WPS = "http://processing.envirocar.org:8080/wps";
+/*var WPS = "http://localhost:8080/envirocar-wps";*/
 
 var map = L.map('map', {
 		zoomControl : true
@@ -49,7 +49,14 @@ function onMapClick(e) {
 
 map.on('click', onMapClick);
 
-function loadStats() {   
+function loadStats() { 
+	
+	if(document.getElementById("Zeitfenster").checked && document.getElementById("Zeitfenster2").checked ){
+		alert("Deaktivieren Sie eine der Zeitfensterabfragen.");
+		return;
+		
+	}
+
 	bufVal = document.getElementById('buffer').value;        
     
     if(document.getElementById("Zeitfenster").checked){
@@ -64,6 +71,7 @@ function loadStats() {
 	}
 	if ((bufVal.length) == 0) {
 		alert("Bitte bestimmen Sie den Radius!");
+		return;
 	} else {
 		$("#loader").show("slow");       
 		console.log(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd +";dateStart="+dtS+";dateEnd="+dtE +"&RawDataOutput=result@mimeType=application/csv");
@@ -212,12 +220,4 @@ function display() {
 
 function remCon() {
 	$("#values2").empty();
-}
-
-function check()
-{
-var x = document.getElementById("Zeitfenster2").checked;
-    dateStart=document.getElementById("dateStart").value;
-    dtS= dateStart.replace(/\//g, "-");
-    console.log(dtS);
 }
