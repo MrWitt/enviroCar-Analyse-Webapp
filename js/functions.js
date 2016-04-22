@@ -121,7 +121,7 @@ function loadStats() {
     }else if(document.getElementById("Zeitfenster2").checked){
         dateStart=document.getElementById("dateStart").value;
         dateEnd=document.getElementById("dateEnd").value; 
-            if(dateStart.length == 0 || DateEnd.length == 0){
+            if(dateStart.length == 0 || dateEnd.length == 0){
               alert("Bitte bestimmen Sie den Abfragezeitraum!");  
                 return;
             }
