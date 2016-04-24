@@ -52,17 +52,18 @@ map.on('click', onMapClick);
 function loadStats() { 
 	
 	if(document.getElementById("Zeitfenster").checked && document.getElementById("Zeitfenster2").checked ){
-		alert("Deaktivieren Sie eine der Zeitfensterabfragen.");
-		return;
-		
+		alert("Deaktivieren Sie bitte eine der Zeitfensterabfragen.");
+		return;	
 	}
-
 	bufVal = document.getElementById('buffer').value;        
-    
     if(document.getElementById("Zeitfenster").checked){
     var dtS = "null";
     var dtE = "null";
 	day = document.getElementById('day').value;
+        if(day == "null"){
+           alert("Bitte wählen Sie ein Tagfenster!");
+            return; 
+        }
 	timeWindowStart = document.getElementById('timeWindow1').value;
 	timeWindowEnd = document.getElementById('timeWindow2').value;
 	if (timeWindowStart.length == 0 || timeWindowEnd.length == 0) {
