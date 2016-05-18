@@ -78,9 +78,9 @@ ul , li {
 
 #menu2{
 	position: fixed;
-	height:60%;
+	height:65%;
 	width: 22%;
-	top: 45%;
+	top: 40%;
 	left: 2%;
 	z-index:1;
 	background-color: rgba(255, 255, 255,0.8);
@@ -90,9 +90,9 @@ ul , li {
 #menu
 {
 	position: fixed;
-	height:60%;
+	height:65%;
 	width: 22%;
-	top: 45%;
+	top: 40%;
 	left: 2%;
 	z-index:2;
 }

@@ -4,18 +4,20 @@
     <meta charset="utf-8" />
     <title>EnviroCar Statistics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" href="http://leaflet.github.io/Leaflet.draw/leaflet.draw.css"/>
 	<link rel="shortcut icon" href="https://52north.org/templates/52n-2012/favicon.ico" type="image/x-icon" />
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
-    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
     <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
+	<script src="http://leaflet.github.io/Leaflet.draw/leaflet.draw.js"></script>
     <script>
-                $(function() {
-                    $( "#dateStart" ).datepicker();
-                    $( "#dateEnd" ).datepicker();
+                $(function(){
+                    $("#dateStart").datepicker();
+                    $("#dateEnd").datepicker();
                 });
    </script>
   </head>
@@ -27,10 +29,15 @@
 	</div>
     <div id="menu">
       <ul>
+	     <li>      
+          <h2>Linie</h2>
+          <p><input type="button" id="polyLine" onclick="new L.Draw.Polyline(map, drawControl.options.polyline).enable();" value="Zeichnen" /> 
+		  <input type="button" id="polyDel" onclick="" value="Löschen" /></p>
+  		</li> 
         <li>      
           <h2>Gebiet</h2>
           <p>Radius: 
-          <input type="number" min="1" max="1000" step="1" id="buffer" value="20"/> m
+          <input type="number" min="1" max="1000" step="1" id="buffer" value="0"/> m
           <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
         </li>
         <li> 

@@ -14,14 +14,14 @@ var WPS = "http://processing.envirocar.org:8080/wps";
 
 var map = L.map('map', {
 		zoomControl : true
-}).setView([51.40, 7.40], 9);
+}).setView([51.183836, 6.440373], 13);
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	maxZoom : 18,
 	attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-	'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+	'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '/* +
 	'Imagery <a href="http://mapbox.com">Mapbox</a>',
-	id : 'mapbox.streets'
+	/*id : 'mapbox.streets'*/
 }).addTo(map);
 
 var popup = L.popup();
@@ -46,7 +46,6 @@ function onMapClick(e) {
 	latlng = e.latlng.lat + " " + e.latlng.lng;
 	loadStats();
 }
-
 map.on('click', onMapClick);
 
 function loadStats() { 
@@ -222,3 +221,38 @@ function display() {
 function remCon() {
 	$("#values2").empty();
 }
+
+var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+
+		var drawControl = new L.Control.Draw({
+			/*draw: {
+				position: 'topleft',
+				polygon: false,
+				polyline: {
+					shapeOptions: {
+						color: 'red'
+					},
+				},
+				circle: false,
+				rectangle: false,
+				marker: false
+			},
+			edit: {
+				featureGroup: drawnItems
+			}*/
+		});
+		/*map.addControl(drawControl);*/
+
+		map.on('draw:created', function (e) {
+			var type = e.layerType,
+				layer = e.layer;
+
+			if (type === 'polyline') {
+			alert(layer.getLatLngs());
+			}
+			drawnItems.addLayer(layer);
+			drawnItems.clearLayers(layer);
+		});
+
+
