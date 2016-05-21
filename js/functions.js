@@ -6,6 +6,7 @@ var timeWindowEnd;
 var download;
 var dateStart;
 var dateEnd;
+var shape;
 var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag"
 var WMS = "http://ags.52north.org:6080";
 /* must not end with slash */
@@ -242,17 +243,24 @@ var drawnItems = new L.FeatureGroup();
 				featureGroup: drawnItems
 			}*/
 		});
-		/*map.addControl(drawControl);*/
 
-		map.on('draw:created', function (e) {
-			var type = e.layerType,
-				layer = e.layer;
+map.on('draw:created', function (e) {
+	/*drawnItems.clearLayers(layer);*/
+	var type = e.layerType,
+	layer = e.layer;
 
-			if (type === 'polyline') {
-			alert(layer.getLatLngs());
-			}
-			drawnItems.addLayer(layer);
-			drawnItems.clearLayers(layer);
-		});
+		if (type === 'polyline') {
+			var shape = JSON.stringify(layer.toGeoJSON());
+			var shape = JSON.parse(shape);
+			/*var shape_for_db = JSON.stringify(shape);*/
+		}
+		drawnItems.addLayer(layer);
+			
+	var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval": {"dateStart": "2012-06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart": "1:30","daytimeEnd": "15:30"},"tolerance": 70.0}';
+	var jsonText = JSON.parse(text);
+	$.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
+	alert(JSON.stringify(jsonText));
+});
+
 
 
