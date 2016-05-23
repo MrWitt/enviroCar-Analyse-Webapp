@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
@@ -28,20 +29,16 @@
     <div id="menu2">
 	</div>
     <div id="menu">
-      <ul>
-	     <li>      
-          <h2>Linie</h2>
+        
+          <!--<h2>Linie</h2>
           <p><input type="button" id="polyLine" onclick="new L.Draw.Polyline(map, drawControl.options.polyline).enable();" value="Zeichnen" /> 
 		  <input type="button" id="polyDel" onclick="" value="Löschen" /></p>
-  		</li> 
-        <li>      
+    
           <h2>Gebiet</h2>
           <p>Radius: 
           <input type="number" min="1" max="1000" step="1" id="buffer" value="0"/> m
           <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
-        </li>
-        <li> 
-		  	<!--tooltip-->
+
 			<a class="tooltip" style="z-index:3; position: absolute; left: 85%; top:8%; text-align:center; ">
                 ?
 				<span>
@@ -59,12 +56,63 @@
 				</select></p>	
             <p>Optional von <input type="text" id="timeWindow1" placeholder="z.B. 6"/>			
                 bis <input type="text" id="timeWindow2" placeholder="z.B. 12"/>Uhr</p>
-        </li>
-        <li>
+
+            <h2>Zeitintervall nutzen:<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
+            <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>-->
+
+        <ul class="w3-navbar w3-black">
+  <li><a  onclick="openCity('Abfragegeometrie')">Abfragegeometrien:</a></li>
+  <li><a  onclick="openCity('Linie')">Linie</a></li>
+  <li><a  onclick="openCity('Kreis')">Kreis</a></li>
+
+</ul>
+        
+
+<div id="Abfragegeometrie" class="geometry">
+  <p>Wählen Sie eine Geometrie.</p>
+</div>        
+        
+<div id="Linie" class="geometry">
+  <h2>Linie</h2>
+  <p><input type="button" id="polyLine" onclick="new L.Draw.Polyline(map, drawControl.options.polyline).enable();" value="Zeichnen" /> 
+		  <input type="button" id="polyDel" value="Löschen" /></p>
+</div>
+
+<div id="Kreis" class="geometry">
+  <h2>Kreis</h2>
+  <p>Radius: 
+          <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="0"/> m
+          <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
+</div>
+        
+<script>
+openCity("Abfragegeometrie")
+function openCity(geomName) {
+    var i;
+    var x = document.getElementsByClassName("geometry");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    document.getElementById(geomName).style.display = "block";  
+}
+</script>
+        <hr>
+        <h2>Zeitfenster nutzen:<input type="checkbox" class="zeit" id="Zeitfenster" /></h2>
+			<p>Tag:
+				 <select id="day">
+                    <option value="null">Auswahl</option>
+					<option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
+					<option value="Samstag">Samstag</option>
+					<option value="Sonntag">Sonntag</option>
+				</select></p>	
+            <p>Optional von <input type="text" id="timeWindow1" placeholder="z.B. 6"/>			
+                bis <input type="text" id="timeWindow2" placeholder="z.B. 12"/>Uhr</p>
+<hr>
             <h2>Zeitintervall nutzen:<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
             <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>
-        </li>
-      </ul>
+        
+        
+        
     </div>	
 	<div id="values">
         <div id=menuButton>

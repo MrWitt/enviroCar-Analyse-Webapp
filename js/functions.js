@@ -6,8 +6,8 @@ var timeWindowEnd;
 var download;
 var dateStart;
 var dateEnd;
-var shape;
-var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag"
+var jsonUrl = "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics";
+var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag";
 var WMS = "http://ags.52north.org:6080";
 /* must not end with slash */
 var WPS = "http://processing.envirocar.org:8080/wps";
@@ -226,40 +226,43 @@ function remCon() {
 var drawnItems = new L.FeatureGroup();
 		map.addLayer(drawnItems);
 
-		var drawControl = new L.Control.Draw({
-			/*draw: {
-				position: 'topleft',
-				polygon: false,
-				polyline: {
-					shapeOptions: {
-						color: 'red'
-					},
-				},
-				circle: false,
-				rectangle: false,
-				marker: false
-			},
-			edit: {
-				featureGroup: drawnItems
-			}*/
-		});
+var drawControl = new L.Control.Draw({});
 
 map.on('draw:created', function (e) {
-	/*drawnItems.clearLayers(layer);*/
+	drawnItems.clearLayers(layer);
 	var type = e.layerType,
 	layer = e.layer;
+    
 
 		if (type === 'polyline') {
 			var shape = JSON.stringify(layer.toGeoJSON());
 			var shape = JSON.parse(shape);
-			/*var shape_for_db = JSON.stringify(shape);*/
 		}
 		drawnItems.addLayer(layer);
+    
+    $('#polyDel').click(function() {
+    map.removeLayer(drawnItems);
+});
+
 			
 	var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval": {"dateStart": "2012-06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart": "1:30","daytimeEnd": "15:30"},"tolerance": 70.0}';
 	var jsonText = JSON.parse(text);
 	$.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
 	alert(JSON.stringify(jsonText));
+    
+    $.ajax({
+        url: jsonUrl,
+        type: "POST",
+        crossDomain: true,
+        data: JSON.stringify(jsonText),
+        dataType: "json",
+        success:function(result){
+            alert(JSON.stringify(result));
+        },
+        error:function(xhr,status,error){
+            alert(status);
+        }
+    });
 });
 
 

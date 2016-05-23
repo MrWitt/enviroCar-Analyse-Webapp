@@ -49,7 +49,7 @@ body {
 
 input[type=number]{
 position: absolute;
-width: 10%;
+width: 2vw;
 }
 
 input[type=text]{
@@ -162,69 +162,7 @@ p {
   z-index: 2;
 }
 
-ul {
-  list-style: none;
-  perspective: 900;
-  padding: 0%;
-  margin: 0%;
-}
-ul li {
-  position: relative;
-  padding: 5%;
-  margin: 5%;
-  padding-bottom: 1%;
-  padding-top: 4%;
-  border-top: 2px solid #66c5e4;
-}
-ul li:nth-of-type(1) {
-  animation-delay: 0.5s;
-}
-ul li:nth-of-type(2) {
-  animation-delay: 0.75s;
-}
-ul li:nth-of-type(3) {
-  animation-delay: 1s;
-}
-ul li:last-of-type {
-  padding-bottom: 0;
-}
-/*
-ul li i {
-  position: absolute;
-  transform: translate(-6px, 0);
-  margin-top: 5%;
-  right:9%;
-}
-ul li i:before, ul li i:after {
-  content: "";
-  position: absolute;
-  background-color: black;
-  width: 3px;
-  height: 9px;
-}
-ul li i:before {
-  transform: translate(-2px, 0) rotate(45deg);
-}
-ul li i:after {
-  transform: translate(2px, 0) rotate(-45deg);
-}*/
-ul li input[type=checkbox] {
-  margin-left: 5%;
-}
-/*
-ul li input[type=checkbox]:checked ~ p {
-  margin-top: 0;
-  max-height: 0;
-  opacity: 0;
-  transform: translate(0, 50%);
-}
-ul li input[type=checkbox]:checked ~ i:before {
-  transform: translate(2px, 0) rotate(45deg);
-}
-ul li input[type=checkbox]:checked ~ i:after {
-  transform: translate(-2px, 0) rotate(-45deg);
-}
-*/
+
 @keyframes flipdown {
   0% {
     opacity: 0;
@@ -311,3 +249,4 @@ input.toggle ~ div {
 input.toggle:checked ~ div { height: 180px; }
 input.toggle:checked + label { }
 input.toggle { display: none; }
+
