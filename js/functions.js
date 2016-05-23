@@ -249,13 +249,14 @@ map.on('draw:created', function (e) {
 	var jsonText = JSON.parse(text);
 	$.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
 	alert(JSON.stringify(jsonText));
-    
+
     $.ajax({
         url: jsonUrl,
         type: "POST",
         crossDomain: true,
         data: JSON.stringify(jsonText),
         dataType: "json",
+		/*contentType: "application/json",*/
         success:function(result){
             alert(JSON.stringify(result));
         },
@@ -263,6 +264,14 @@ map.on('draw:created', function (e) {
             alert(status);
         }
     });
+	
+	$.post(jsonUrl, JSON.stringify(jsonText),
+    function(data){
+        alert(data.name); // John
+        console.log(data.time); //  2pm
+    }, "json");
+	
+http://stackoverflow.com/questions/5584923/a-cors-post-request-works-from-plain-javascript-but-why-not-with-jquery
 });
 
 
