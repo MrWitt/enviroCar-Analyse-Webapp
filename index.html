@@ -60,25 +60,24 @@
             <h2>Zeitintervall nutzen:<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
             <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>-->
 
-        <ul class="w3-navbar w3-black">
-  <li><a  onclick="openCity('Abfragegeometrie')">Abfragegeometrien:</a></li>
+<ul class="w3-navbar w3-blue">
+  <li><a>Abfragegeometrien:</a></li>
   <li><a  onclick="openCity('Linie')">Linie</a></li>
   <li><a  onclick="openCity('Kreis')">Kreis</a></li>
-
 </ul>
         
 
-<div id="Abfragegeometrie" class="geometry">
+<div style="height:6.8vw;" id="Abfragegeometrie" class="geometry">
   <p>Wählen Sie eine Geometrie.</p>
 </div>        
         
-<div id="Linie" class="geometry">
+<div style="height:7vw;" id="Linie" class="geometry">
   <h2>Linie</h2>
   <p><input type="button" id="polyLine" onclick="new L.Draw.Polyline(map, drawControl.options.polyline).enable();" value="Zeichnen" /> 
 		  <input type="button" id="polyDel" value="Löschen" /></p>
 </div>
 
-<div id="Kreis" class="geometry">
+<div style="height:7vw;" id="Kreis" class="geometry">
   <h2>Kreis</h2>
   <p>Radius: 
           <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="0"/> m
@@ -96,8 +95,19 @@ function openCity(geomName) {
     document.getElementById(geomName).style.display = "block";  
 }
 </script>
-        <hr>
-        <h2>Zeitfenster nutzen:<input type="checkbox" class="zeit" id="Zeitfenster" /></h2>
+		
+<ul class="w3-navbar w3-blue">
+  <li><a>Abfragezeiträume:</a></li>
+  <li><a  onclick="openTime('Zeitfenster')">Zeitfenster</a></li>
+  <li><a  onclick="openTime('Zeitintervall')">Zeitintervall</a></li>
+</ul>
+
+<div id="Abfragezeiträume" class="time">
+  <p>Wählen Sie einen Abfragezeitraum.</p>
+</div> 
+
+<div id="Zeitfenster" class="time">
+<h2>Zeitfenster nutzen:<input type="checkbox" class="zeit" id="Zeitfenster" /></h2>
 			<p>Tag:
 				 <select id="day">
                     <option value="null">Auswahl</option>
@@ -107,12 +117,25 @@ function openCity(geomName) {
 				</select></p>	
             <p>Optional von <input type="text" id="timeWindow1" placeholder="z.B. 6"/>			
                 bis <input type="text" id="timeWindow2" placeholder="z.B. 12"/>Uhr</p>
-<hr>
+
+</div>
+
+<div id="Zeitintervall" class="time">
             <h2>Zeitintervall nutzen:<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
             <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>
-        
-        
-        
+</div>
+<script>
+openTime("Abfragezeiträume")
+function openTime(timeName) {
+    var i;
+    var x = document.getElementsByClassName("time");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    document.getElementById(timeName).style.display = "block";  
+}
+</script>
+    
     </div>	
 	<div id="values">
         <div id=menuButton>
