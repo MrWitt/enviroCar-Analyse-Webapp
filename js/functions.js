@@ -6,8 +6,10 @@ var timeWindowEnd;
 var download;
 var dateStart;
 var dateEnd;
+var index;
 var jsonUrl = "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics";
 var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag";
+var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval": {"dateStart": "2015-               06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart":                "1:30","daytimeEnd": "15:30"},"tolerance": 70.0}';
 var WMS = "http://ags.52north.org:6080";
 /* must not end with slash */
 var WPS = "http://processing.envirocar.org:8080/wps";
@@ -256,8 +258,7 @@ map.on('draw:created', function (e) {
     map.removeLayer(drawnItems);
 	});
 
-			
-	var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval": {"dateStart": "2015-06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart": "1:30","daytimeEnd": "15:30"},"tolerance": 70.0}';
+
 	var jsonText = JSON.parse(text);
 	$.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
 	alert(JSON.stringify(jsonText));
@@ -279,29 +280,39 @@ map.on('draw:created', function (e) {
         }
     });
 });
-/*http://stackoverflow.com/questions/5584923/a-cors-post-request-works-from-plain-javascript-but-why-not-with-jquery*/
 
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-        layer.bindPopup("works");
-}
 
 function geoLayer(){
 
-		alert(JSON.stringify(jsonResult[0]));
+        /* START SEARCH FOR INDEX OF SPEED*/
+        var str = JSON.stringify(jsonResult[0].properties);
+        var data = JSON.parse(str);
+        index = data.map(function(d) { return d['name']; }).indexOf('Speed');
+        alert(index);
+        /* END SEARCH FOR INDEX OF SPEED*/
+    
+       /* $.getScript('http://www.defiantjs.com/defiant.js/dist/defiant-latest.min.js', function() {
+            res1 = JSON.search(jsonResult, '//*[name="Speed"]' );
+                for (var i=0; i<res1.length; i++) {
+                    console.log( res1[i].avg );
+                    }
+            });*/
 			
 			var mylayer = L.geoJson(jsonResult, {
 			style: function (feature) {
-			alert(JSON.stringify(feature.properties[1].avg));
+			alert(JSON.stringify(feature.properties[index].avg));
 			return {
-			"color": getColor(feature.properties[1].avg),
+			"color": getColor(feature.properties[index].avg),
 			"weight": 5,
 			"opacity": 1,
 			}},
 			onEachFeature: onEachFeature
 		}).addTo(map);
-		/*mylayer.bindPopup("The average Speed is "+jsonResult.properties[1].avg+"km/h."+ "<br> The Maximum is "+jsonResult.properties[1].max +"km/h and minimum is "+jsonResult.properties[1].min+ "km/h.");
-*/
+};
+
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+       layer.bindPopup("The average Speed is "+feature.properties[index].avg+"km/h."+ "<br> The Maximum is "+feature.properties[index].max +"km/h and minimum is "+feature.properties[index].min+ "km/h.");
 };
 
 
