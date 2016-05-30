@@ -228,6 +228,18 @@ var drawnItems = new L.FeatureGroup();
 
 var drawControl = new L.Control.Draw({});
 
+
+function getColor(x) {
+  return x < 22.11542842678142    ?   '#00FF00':
+         x < 22.131530165149982     ?   '#88FF00':
+         x < 22.139786303213864     ?   '#FFFF00':
+         x < 70     ?   '#FF7700':
+         x < 90     ?   '#FF0000' :
+						'#FF0000' ;
+};
+
+var jsonResult;
+
 map.on('draw:created', function (e) {
 	drawnItems.clearLayers(layer);
 	var type = e.layerType,
@@ -242,37 +254,54 @@ map.on('draw:created', function (e) {
     
     $('#polyDel').click(function() {
     map.removeLayer(drawnItems);
-});
+	});
 
 			
-	var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval": {"dateStart": "2012-06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart": "1:30","daytimeEnd": "15:30"},"tolerance": 70.0}';
+	var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval": {"dateStart": "2015-06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart": "1:30","daytimeEnd": "15:30"},"tolerance": 70.0}';
 	var jsonText = JSON.parse(text);
 	$.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
 	alert(JSON.stringify(jsonText));
-
+	
     $.ajax({
         url: jsonUrl,
         type: "POST",
         crossDomain: true,
         data: JSON.stringify(jsonText),
         dataType: "json",
-		/*contentType: "application/json",*/
+		/*contentType: "application/json;charset=utf-8",*/
         success:function(result){
-            alert(JSON.stringify(result));
+		jsonResult = result.features;
+		alert("it worked!"+JSON.stringify(result));
+		geoLayer();
         },
         error:function(xhr,status,error){
-            alert(status);
+            alert(JSON.stringify(xhr), status,error);
         }
     });
-	
-	$.post(jsonUrl, JSON.stringify(jsonText),
-    function(data){
-        alert(data.name); // John
-        console.log(data.time); //  2pm
-    }, "json");
-	
-http://stackoverflow.com/questions/5584923/a-cors-post-request-works-from-plain-javascript-but-why-not-with-jquery
 });
+/*http://stackoverflow.com/questions/5584923/a-cors-post-request-works-from-plain-javascript-but-why-not-with-jquery*/
 
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+        layer.bindPopup("works");
+}
+
+function geoLayer(){
+
+		alert(JSON.stringify(jsonResult[0]));
+			
+			var mylayer = L.geoJson(jsonResult, {
+			style: function (feature) {
+			alert(JSON.stringify(feature.properties[1].avg));
+			return {
+			"color": getColor(feature.properties[1].avg),
+			"weight": 5,
+			"opacity": 1,
+			}},
+			onEachFeature: onEachFeature
+		}).addTo(map);
+		/*mylayer.bindPopup("The average Speed is "+jsonResult.properties[1].avg+"km/h."+ "<br> The Maximum is "+jsonResult.properties[1].max +"km/h and minimum is "+jsonResult.properties[1].min+ "km/h.");
+*/
+};
 
 
