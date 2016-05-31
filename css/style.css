@@ -1,252 +1,276 @@
-*{
-	/* A universal CSS reset */
-	margin:0;
-	padding:0;
+* {
+    /*CSS reset */
+    margin: 0;
+    padding: 0;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
+html,
+body {
+    height: 100%;
+    width: 100%;
 }
 
 body {
-  display: flex;
-  overflow: hidden;
-  font-family:Arial, Helvetica, sans-serif;
+    display: flex;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#map{
-	
-	width: 100%; 
-	height: 100%;
-	position:absolute;
-	z-index:1;
+#map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
 }
 
 .button {
-	border:1px solid gray;
-	display:inline-block;
-	cursor:pointer;	
-	opacity:1;
+    border: 1px solid gray;
+    display: inline-block;
+    cursor: pointer;
+    opacity: 1;
     font-size: 0.8vw;
 }
 
-#menuButton{
-    height:5%;
-    width:90%;
+#menuButton {
+    height: 5%;
+    width: 90%;
     margin-left: 14%;
 }
 
-#loader{
-	position: absolute;
-	height:10%;
-	width: 10%;
-	z-index:3;
-	display:none;
-}
-	
+#loader {
+    position: absolute;
+    height: 10%;
+    width: 10%;
+    z-index: 3;
+    display: none;
 }
 
-input[type=number]{
-position: absolute;
-width: 2vw;
-}
 
-input[type=text]{
-width: 4.5vw;
 }
-
-input[type=button]{
-	border:1px solid gray;
-	display:inline-block;
-	cursor:pointer;	
-	opacity:1;
+input[type=number] {
+    position: absolute;
+    width: 2vw;
+}
+input[type=text] {
+    width: 4.5vw;
+}
+input[type=button] {
+    border: 1px solid gray;
+    display: inline-block;
+    cursor: pointer;
+    opacity: 1;
     font-size: 0.8vw;
 }
-
-input[type=button]:hover{
-	border:1px solid black;
-	display:inline-block;
-	cursor:pointer;	
-	opacity:1;
-}
-
-ul , li {
-  margin: 0;
-  padding: 0;
-}
-
-#menu2{
-	position: fixed;
-	height:50%;
-	width: 22%;
-	top: 55%;
-	left: 2%;
-	z-index:1;
-	background-color: rgba(255, 255, 255,0.8);
-}
-
-
-#menu
-{
-	position: fixed;
-	height:50%;
-	width: 22%;
-	top: 55%;
-	left: 2%;
-	z-index:2;
-}
-
-#values{
-	position: absolute;
-	height:50%;
-	width: 45%;
-	top: 50%;
-	left: 55%;
-	z-index:3;
-	background-color: rgba(255, 255, 255,0.8);
-	display: none;
-	
-}
-
-#values2{
-	position: absolute;
-	height:41%;
-	width: 43%;
-	top: 55%;
-	left: 56%;
-	z-index:3;
-	display: none;
-	
-}
-
-.transition, p, ul li i:before, ul li i:after {
-  transition: all 0.25s ease-in-out;
-}
-
-.flipIn, h1, ul li {
-  animation: flipdown 0.5s ease both;
-}
-
-.no-select, h2 {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-h2 {
-  font-weight: 500;
-  font-size: 1.1vw;
-  line-height: 1vw;
-  letter-spacing: 1px;
-  display: block;
-  margin: 0;
-  cursor: pointer;
-}
-
-p {
-  
-  font-size: 1vw;
-  line-height: 1.6vw;;
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
-  max-height: 800px;
-  opacity: 1;
-  transform: translate(0, 0);
-  margin-top: 14px;
-  z-index: 2;
-}
-
-
-@keyframes flipdown {
-  0% {
-    opacity: 0;
-    transform-origin: top center;
-    transform: rotateX(-90deg);
-  }
-  5% {
+input[type=button]:hover {
+    border: 1px solid black;
+    display: inline-block;
+    cursor: pointer;
     opacity: 1;
-  }
-  80% {
-    transform: rotateX(8deg);
-  }
-  83% {
-    transform: rotateX(6deg);
-  }
-  92% {
-    transform: rotateX(-3deg);
-  }
-  100% {
-    transform-origin: zop center;
-    transform: rotateX(0deg);
-  }
+}
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+#menu2 {
+    position: fixed;
+    height: 50%;
+    width: 35%;
+    top: 55%;
+    left: 2%;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+#menu {
+    position: fixed;
+    height: 50%;
+    width: 35%;
+    top: 55%;
+    left: 2%;
+    z-index: 2;
+}
+#values {
+    position: absolute;
+    height: 50%;
+    width: 45%;
+    top: 50%;
+    left: 55%;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+}
+#values2 {
+    position: absolute;
+    height: 41%;
+    width: 43%;
+    top: 55%;
+    left: 56%;
+    z-index: 3;
+    display: none;
+}
+.transition,
+p,
+ul li i:before,
+ul li i:after {
+    transition: all 0.25s ease-in-out;
+}
+.flipIn,
+h1,
+ul li {
+    animation: flipdown 0.5s ease both;
+}
+.no-select,
+h2 {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+h2 {
+    font-weight: 500;
+    font-size: 1.1vw;
+    line-height: 1vw;
+    letter-spacing: 1px;
+    display: block;
+    margin: 0;
+    cursor: pointer;
+}
+p {
+    font-size: 1vw;
+    line-height: 1.6vw;
+    ;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    max-height: 800px;
+    opacity: 1;
+    transform: translate(0, 0);
+    margin-top: 14px;
+    z-index: 2;
+}
+@keyframes flipdown {
+    0% {
+        opacity: 0;
+        transform-origin: top center;
+        transform: rotateX(-90deg);
+    }
+    
+    5% {
+        opacity: 1;
+    }
+    
+    80% {
+        transform: rotateX(8deg);
+    }
+    
+    83% {
+        transform: rotateX(6deg);
+    }
+    
+    92% {
+        transform: rotateX(-3deg);
+    }
+    
+    100% {
+        transform-origin: zop center;
+        transform: rotateX(0deg);
+    }
 }
 table {
     border-collapse: collapse;
-	border: 1px solid #626250;
-	width: 100%;
+    border: 1px solid #626250;
+    width: 100%;
 }
-
-th, td {
-   border: 1px solid #626250;
-} 
-tr:hover {background-color: #f5f5f5}
+th,
+td {
+    border: 1px solid #626250;
+}
+tr:hover {
+    background-color: #f5f5f5
+}
 
 /*Tooltip*/
-
-a.tooltip {outline:none; border: 2px solid #000; background: #66c5e4; border-radius: 0px; width: 1.2vw; height: 1.2vw;}
-a.tooltip strong {line-height:30px;}
-a.tooltip:hover {text-decoration:none;cursor:pointer} 
-a.tooltip span {
-    z-index:10; display:none; padding:14px 20px;
-    margin-top:-30px; margin-left:28px;
-    width:300px; line-height:16px;cursor:pointer;
+a.tooltip {
+    outline: none;
+    border: 2px solid #000;
+    background: #66c5e4;
+    border-radius: 0px;
+    width: 2vw;
+    height: 2vw;
 }
-a.tooltip:hover span{
-    display:inline; position:absolute; color:#111;
-    border:1px solid #DCA; background:#fffAF0;}
-.callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
-   
+a.tooltip strong {
+    line-height: 30px;
+}
+a.tooltip:hover {
+    text-decoration: none;
+    cursor: pointer
+}
+a.tooltip span {
+    z-index: 10;
+    display: none;
+    padding: 14px 20px;
+    margin-top: -30px;
+    margin-left: 28px;
+    width: 300px;
+    line-height: 16px;
+    cursor: pointer;
+}
+a.tooltip:hover span {
+    display: inline;
+    position: absolute;
+    color: #111;
+    border: 1px solid #DCA;
+    background: #fffAF0;
+}
+.callout {
+    z-index: 20;
+    position: absolute;
+    top: 30px;
+    border: 0;
+    left: -12px;
+}
 
 /*Links*/
-div.window { 
-  color: black;
-  position:absolute;
-  top:-0.7vw;
-  left: 34.5%;
-  width: 30%;
-  padding: .4%;
-  border-radius: 0 0 25% 25%;
-  border:1px solid #66c5e4;
-  background: #f5f5f5;
-  margin: 1rem;
-  opacity:0.85;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0 auto; 
+div.window {
+    color: black;
+    position: absolute;
+    top: -0.7vw;
+    left: 34.5%;
+    width: 30%;
+    padding: .4%;
+    border-radius: 0 0 25% 25%;
+    border: 1px solid #66c5e4;
+    background: #f5f5f5;
+    margin: 1rem;
+    opacity: 0.85;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
 }
-div.window label { 
-  display: block;
-  background: #66c5e4;
-  font-size: larger;
-  border-radius: 10px;
-  padding: .6rem;
-  transition: .4s all linear; 
+div.window label {
+    display: block;
+    background: #66c5e4;
+    font-size: larger;
+    border-radius: 10px;
+    padding: .6rem;
+    transition: .4s all linear;
 }
-div.window label:hover { 
-  cursor: pointer; 
+div.window label:hover {
+    cursor: pointer;
 }
-input.toggle ~ div { 
-  height: 0px; margin: .2rem;
-  overflow: hidden;
-  transition: .6s all cubic-bezier(0.730, -0.485, 0.145, 1.620)
+input.toggle ~ div {
+    height: 0px;
+    margin: .2rem;
+    overflow: hidden;
+    transition: .6s all cubic-bezier(0.730, -0.485, 0.145, 1.620)
 }
-input.toggle:checked ~ div { height: 180px; }
-input.toggle:checked + label { }
-input.toggle { display: none; }
-
+input.toggle:checked ~ div {
+    height: 180px;
+}
+input.toggle:checked + label {}
+input.toggle {
+    display: none;
+}

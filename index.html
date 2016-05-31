@@ -1,161 +1,188 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>EnviroCar Statistics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="http://leaflet.github.io/Leaflet.draw/leaflet.draw.css"/>
-	<link rel="shortcut icon" href="https://52north.org/templates/52n-2012/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.draw/leaflet.draw.css" />
+    <link rel="shortcut icon" href="https://52north.org/templates/52n-2012/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
     <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
-	<script src="http://leaflet.github.io/Leaflet.draw/leaflet.draw.js"></script>
+    <script src="http://leaflet.github.io/Leaflet.draw/leaflet.draw.js"></script>
     <script>
-                $(function(){
-                    $("#dateStart").datepicker();
-                    $("#dateEnd").datepicker();
-                });
-   </script>
-  </head>
-  <body>  
+        $(function () {
+            $("#dateStartLine").datepicker();
+            $("#dateEndLine").datepicker();
+            $("#dateStart").datepicker();
+            $("#dateEnd").datepicker();
+        });
+    </script>
+</head>
+
+<body>
     <div id="map">
-      <script language="JavaScript" src="js/functions.js"></script>
+        <script language="JavaScript" src="js/functions.js"></script>
     </div>
     <div id="menu2">
-	</div>
+    </div>
     <div id="menu">
-        
-          <!--<h2>Linie</h2>
-          <p><input type="button" id="polyLine" onclick="new L.Draw.Polyline(map, drawControl.options.polyline).enable();" value="Zeichnen" /> 
-		  <input type="button" id="polyDel" onclick="" value="Löschen" /></p>
-    
-          <h2>Gebiet</h2>
-          <p>Radius: 
-          <input type="number" min="1" max="1000" step="1" id="buffer" value="0"/> m
-          <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
 
-			<a class="tooltip" style="z-index:3; position: absolute; left: 85%; top:8%; text-align:center; ">
+        <ul class="w3-navbar w3-blue">
+            <li><a>Abfragegeometrien:</a></li>
+            <li><a onclick="openCity('Linie')">Linie</a></li>
+            <li><a onclick="openCity('Kreis')">Kreis</a></li>
+        </ul>
+
+
+        <div style="height:6.8vw;" id="Abfragegeometrie" class="geometry">
+            <p>Wählen Sie eine Geometrie.</p>
+        </div>
+        <div style="padding: 1vw;">
+            <div style="" id="Linie" class="geometry">
+                <h3>Linie</h3>
+                <p>Zwischen dem
+                    <input type="text" id="dateStartLine" \> und
+                    <input type="text" id="dateEndLine" \> </p>
+                <p>die folgenden Wochentage abfragen:
+                    <select id="dayLine">
+                        <option value="null">Auswahl</option>
+                        <option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
+                        <option value="Samstag">Samstag</option>
+                        <option value="Sonntag">Sonntag</option>
+                    </select>
+                </p>
+
+                <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:16vw; text-align:center; ">
+                ?
+				<span>
+					<strong>Linie</strong><br />
+					Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte der Linie zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen. 
+				</span>
+			</a>
+
+                <p>Von
+                    <input type="text" id="timeWindow1Line" placeholder="06:00" />Uhr bis
+                    <input type="text" id="timeWindow2Line" placeholder="12:30" />Uhr.</p>
+                <hr style="border:solid #0099FF 1px;">
+                <p>
+                    <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false; document.getElementById('polyDel').disabled = false;" value="Linie Zeichnen" />
+                    <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" value="Abbrechen" disabled />
+                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true;" disabled />
+                </p>
+            </div>
+
+            <div id="Kreis" class="geometry">
+                <h3>Kreis</h3>
+                <p>Radius:
+                    <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="0" /> m
+                    <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" />
+                </p>
+                <br>
+                <ul class="w3-navbar w3-blue" style="width:35vw; margin-left:-1vw;">
+                    <li><a>Abfragezeiträume:</a></li>
+                    <li><a onclick="openTime('Zeitfenster')">Zeitfenster</a></li>
+                    <li><a onclick="openTime('Zeitintervall')">Zeitintervall</a></li>
+                </ul>
+
+                <div id="Abfragezeiträume" class="time">
+                    <p>Wählen Sie einen Abfragezeitraum.</p>
+                </div>
+
+                <div id="Zeitfenster" class="time">
+                    <h4>Zeitfenster nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox" /></h4>
+                    <p>Tag:
+                        <select id="day">
+                            <option value="null">Auswahl</option>
+                            <option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
+                            <option value="Samstag">Samstag</option>
+                            <option value="Sonntag">Sonntag</option>
+                        </select>
+                    </p>
+                    <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:5.5vw; text-align:center; ">
                 ?
 				<span>
 					<strong>Zeitfenster</strong><br />
 					Erfolgt im optionalen Zeitfenster keine Eingabe, so werden vorgefertigte Zeitabschnitte (6-10Uhr,10-15Uhr...) ausgegeben. 
 				</span>
-			</a>	  
-            <h2>Zeitfenster nutzen:<input type="checkbox" class="zeit" id="Zeitfenster" /></h2>
-			<p>Tag:
-				 <select id="day">
-                    <option value="null">Auswahl</option>
-					<option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
-					<option value="Samstag">Samstag</option>
-					<option value="Sonntag">Sonntag</option>
-				</select></p>	
-            <p>Optional von <input type="text" id="timeWindow1" placeholder="z.B. 6"/>			
-                bis <input type="text" id="timeWindow2" placeholder="z.B. 12"/>Uhr</p>
+			</a>
 
-            <h2>Zeitintervall nutzen:<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
-            <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>-->
+                    <p>Optional von
+                        <input type="text" id="timeWindow1" placeholder="z.B. 6" /> bis
+                        <input type="text" id="timeWindow2" placeholder="z.B. 12" />Uhr</p>
 
-<ul class="w3-navbar w3-blue">
-  <li><a>Abfragegeometrien:</a></li>
-  <li><a  onclick="openCity('Linie')">Linie</a></li>
-  <li><a  onclick="openCity('Kreis')">Kreis</a></li>
-</ul>
-        
+                </div>
 
-<div style="height:6.8vw;" id="Abfragegeometrie" class="geometry">
-  <p>Wählen Sie eine Geometrie.</p>
-</div>        
-        
-<div style="height:7vw;" id="Linie" class="geometry">
-  <h2>Linie</h2>
-  <p><input type="button" id="polyLine" onclick="new L.Draw.Polyline(map, drawControl.options.polyline).enable();" value="Zeichnen" /> 
-		  <input type="button" id="polyDel" value="Löschen" /></p>
-</div>
+                <div id="Zeitintervall" class="time">
+                    <h4>Zeitintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox2"/></h4>
+                    <p>Zwischen dem
+                        <input type="text" id="dateStart" \> und
+                        <input type="text" id="dateEnd" \> </p>
+                </div>
 
-<div style="height:7vw;" id="Kreis" class="geometry">
-  <h2>Kreis</h2>
-  <p>Radius: 
-          <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="0"/> m
-          <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
-</div>
-        
-<script>
-openCity("Abfragegeometrie")
-function openCity(geomName) {
-    var i;
-    var x = document.getElementsByClassName("geometry");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(geomName).style.display = "block";  
-}
-</script>
-		
-<ul class="w3-navbar w3-blue">
-  <li><a>Abfragezeiträume:</a></li>
-  <li><a  onclick="openTime('Zeitfenster')">Zeitfenster</a></li>
-  <li><a  onclick="openTime('Zeitintervall')">Zeitintervall</a></li>
-</ul>
 
-<div id="Abfragezeiträume" class="time">
-  <p>Wählen Sie einen Abfragezeitraum.</p>
-</div> 
-
-<div id="Zeitfenster" class="time">
-<h2>Zeitfenster nutzen:<input type="checkbox" class="zeit" id="Zeitfenster" /></h2>
-			<p>Tag:
-				 <select id="day">
-                    <option value="null">Auswahl</option>
-					<option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
-					<option value="Samstag">Samstag</option>
-					<option value="Sonntag">Sonntag</option>
-				</select></p>	
-            <p>Optional von <input type="text" id="timeWindow1" placeholder="z.B. 6"/>			
-                bis <input type="text" id="timeWindow2" placeholder="z.B. 12"/>Uhr</p>
-
-</div>
-
-<div id="Zeitintervall" class="time">
-            <h2>Zeitintervall nutzen:<input type="checkbox" class="zeit" id="Zeitfenster2"/></h2>
-            <p>Zwischen dem <input type="text" id="dateStart" \> und <input type="text" id="dateEnd"\> </p>
-</div>
-<script>
-openTime("Abfragezeiträume")
-function openTime(timeName) {
-    var i;
-    var x = document.getElementsByClassName("time");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(timeName).style.display = "block";  
-}
-</script>
-    
-    </div>	
-	<div id="values">
-        <div id=menuButton>
-            <a id="download"><button class="button">Tabelle herunterladen</button></a>
-	       <input type="button" id="clear" onclick="remCon()" value="Tabelle löschen" />
-	       <input type="button" id="close" onclick="hide()" value="Fenster schließen" style="margin-left: 40%;"/>
+            </div>
         </div>
-	</div>
-	<div id ="values2" style="border:solid #5bbde8 2px; overflow:scroll;">
-	</div>
-	<div id="loader" style="background:url(loader/gears.gif) no-repeat center center;width:100%;height:100%;">	
-	</div>
-	<div style= "z-index:4;">
-		<div class="window">
-			<input type="checkbox" id="punch" class="toggle">
-			<label for="punch">Information</label>
-		<div>
-			<p>Diese Anwendung ermöglicht unter Angabe eines Zeitfensters und einer Gebietsgröße, die durchschnittlichen Geschwindigkeiten in einem von Ihnen bestimmten Gebiet zu berechnen und als .csv-Datei zur Verfügung zu stellen. Mehr zum EnviroCar Projekt gibt es <a href="https://envirocar.org/">hier</a>.<p>
-		</div>
-		</div>
-	</div>	
-  </body>
+
+        <script>
+            openCity("Abfragegeometrie")
+
+            function openCity(geomName) {
+                var i;
+                var x = document.getElementsByClassName("geometry");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                document.getElementById(geomName).style.display = "block";
+            }
+        </script>
+
+
+
+
+        <script>
+            openTime("Abfragezeiträume")
+
+            function openTime(timeName) {
+                var i;
+                var x = document.getElementsByClassName("time");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                document.getElementById(timeName).style.display = "block";
+            }
+        </script>
+
+    </div>
+    <div id="values">
+        <div id=menuButton>
+            <a id="download">
+                <button class="button">Tabelle herunterladen</button>
+            </a>
+            <input type="button" id="clear" onclick="remCon()" value="Tabelle löschen" />
+            <input type="button" id="close" onclick="hide()" value="Fenster schließen" style="margin-left: 35%;" />
+        </div>
+    </div>
+    <div id="values2" style="border:solid #5bbde8 2px; overflow:scroll;">
+    </div>
+    <div id="loader" style="background:url(loader/gears.gif) no-repeat center center;width:100%;height:100%;">
+    </div>
+    <div style="z-index:4;">
+        <div class="window">
+            <input type="checkbox" id="punch" class="toggle">
+            <label for="punch">Information</label>
+            <div>
+                <p>Diese Anwendung ermöglicht unter Angabe eines Zeitfensters und einer Gebietsgröße, die durchschnittlichen Geschwindigkeiten in einem von Ihnen bestimmten Gebiet zu berechnen und als .csv-Datei zur Verfügung zu stellen. Mehr zum EnviroCar Projekt gibt es <a href="https://envirocar.org/">hier</a>.
+                    <p>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
