@@ -7,6 +7,7 @@ var download;
 var dateStart;
 var dateEnd;
 var index;
+var text;
 var jsonUrl = "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics";
 var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag";
 var WMS = "http://ags.52north.org:6080";
@@ -258,8 +259,8 @@ map.on('draw:created', function (e) {
         map.removeLayer(drawnItems);
         map.removeLayer(mylayer);
     });
-
-    var text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "2015-06-08T11:29:10Z","dateEnd": "2016-09-08T11:29:10Z","dayOfWeekStart": 1,"dayOfWeekEnd": 5,"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": 70.0}';
+    
+    buildJsonText();
 
     var jsonText = JSON.parse(text);
     $.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
@@ -314,3 +315,16 @@ function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(2) + "km/h." + "<br> The Maximum is " + feature.properties[index].max + "km/h and minimum is " + feature.properties[index].min + "km/h.");
 };
+
+function buildJsonText(){
+    if(document.getElementById("dateStartLine").value == "" || document.getElementById('dayStartLine').value =="null" ||document.getElementById('timeWindow1Line').length == "" ){
+        alert("Sie haben wichtige Eingabeparameter vergessen!");
+        document.getElementById("polyDel").click();
+        drawHandler.disable();
+        return;
+    }else{
+    text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "'+document.getElementById("dateStartLine").value+'T00:00:01Z","dateEnd":"'+document.getElementById("dateEndLine").value+'T00:00:01Z","dayOfWeekStart":'+document.getElementById('dayStartLine').value+',"dayOfWeekEnd": '+document.getElementById('dayEndLine').value +',"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": 70.0}';
+    
+    return(text);
+    }
+}

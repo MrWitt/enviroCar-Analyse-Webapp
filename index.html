@@ -18,8 +18,8 @@
     <script src="http://leaflet.github.io/Leaflet.draw/leaflet.draw.js"></script>
     <script>
         $(function () {
-            $("#dateStartLine").datepicker();
-            $("#dateEndLine").datepicker();
+            $("#dateStartLine").datepicker({dateFormat: "yy-mm-dd"});
+            $("#dateEndLine").datepicker({dateFormat: "yy-mm-dd"});
             $("#dateStart").datepicker();
             $("#dateEnd").datepicker();
         });
@@ -48,15 +48,29 @@
             <div style="" id="Linie" class="geometry">
                 <h3>Linie</h3>
                 <p>Zwischen dem
-                    <input type="text" id="dateStartLine" \> und
-                    <input type="text" id="dateEndLine" \> </p>
-                <p>die folgenden Wochentage abfragen:
-                    <select id="dayLine">
+                    <input type="text" id="dateStartLine" placeholder="Datum" \> und
+                    <input type="text" id="dateEndLine" placeholder="Datum" \> </p>
+                <p>die Wochentage
+                    <select id="dayStartLine">
                         <option value="null">Auswahl</option>
-                        <option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
-                        <option value="Samstag">Samstag</option>
-                        <option value="Sonntag">Sonntag</option>
-                    </select>
+                        <option value="1">Montag</option>
+                        <option value="2">Dienstag</option>
+                        <option value="3">Mittwoch</option>
+                        <option value="4">Donnerstag</option>
+                        <option value="5">Freitag</option>
+                        <option value="6">Samstag</option>
+                        <option value="0">Sonntag</option>
+                    </select> bis
+                    <select id="dayEndLine">
+                        <option value="null">Auswahl</option>
+                        <option value="1">Montag</option>
+                        <option value="2">Dienstag</option>
+                        <option value="3">Mittwoch</option>
+                        <option value="4">Donnerstag</option>
+                        <option value="5">Freitag</option>
+                        <option value="6">Samstag</option>
+                        <option value="0">Sonntag</option>
+                    </select>abfragen.
                 </p>
 
                 <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:16vw; text-align:center; ">
@@ -74,7 +88,7 @@
                 <p>
                     <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false; document.getElementById('polyDel').disabled = false;" value="Linie Zeichnen" />
                     <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" value="Abbrechen" disabled />
-                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true;" disabled />
+                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
                 </p>
             </div>
 
@@ -122,8 +136,8 @@
                 <div id="Zeitintervall" class="time">
                     <h4>Zeitintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox2"/></h4>
                     <p>Zwischen dem
-                        <input type="text" id="dateStart" \> und
-                        <input type="text" id="dateEnd" \> </p>
+                        <input type="text" id="dateStart" placeholder="Datum" \> und
+                        <input type="text" id="dateEnd" placeholder="Datum" \> </p>
                 </div>
 
 
@@ -135,6 +149,7 @@
 
             function openCity(geomName) {
                 var i;
+                filterCircle.setRadius(0)
                 var x = document.getElementsByClassName("geometry");
                 for (i = 0; i < x.length; i++) {
                     x[i].style.display = "none";
