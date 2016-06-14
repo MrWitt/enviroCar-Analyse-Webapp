@@ -244,7 +244,7 @@ function getColor(x) {
 var jsonResult;
 
 map.on('draw:created', function (e) {
-    drawnItems.clearLayers(layer);
+	drawnItems.clearLayers(layer);
     var type = e.layerType
         , layer = e.layer;
 
@@ -253,19 +253,13 @@ map.on('draw:created', function (e) {
         var shape = JSON.stringify(layer.toGeoJSON());
         var shape = JSON.parse(shape);
     }
-    drawnItems.addLayer(layer);
-
-    $('#polyDel').click(function () {
-        map.removeLayer(drawnItems);
-        map.removeLayer(mylayer);
-    });
-    
+    drawnItems.addLayer(layer);   
     buildJsonText();
-
     var jsonText = JSON.parse(text);
     $.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
     alert(JSON.stringify(jsonText));
     $("#loader").show("slow");
+	$("#loaderText").show("slow");
     $.ajax({
         url: jsonUrl
         , type: "POST"
@@ -281,6 +275,7 @@ map.on('draw:created', function (e) {
         , error: function (xhr, status, error) {
             alert(JSON.stringify(xhr), status, error);
             $("#loader").hide("slow");
+			$("#loaderText").hide("slow");
         }
     });
 });
@@ -294,12 +289,17 @@ function colorLine() {
     index = data.map(function (d) {
         return d['name'];
     }).indexOf('Speed');
-    alert(index);
+	$("#loader").hide("slow");
+	$("#loaderText").hide("slow");
+	if(index == -1){
+	alert("Es wurden keine passenden Fahrten gefunden!");
+	        document.getElementById("polyDel").click();
+			drawHandler.disable();
+	return;
+	}else{
     /* END SEARCH FOR INDEX OF SPEED*/
-    $("#loader").hide("slow");
     var mylayer = L.geoJson(jsonResult, {
         style: function (feature) {
-            alert(" " + feature.properties[index].avg)
             return {
                 "color": getColor(feature.properties[index].avg)
                 , "weight": 5
@@ -308,7 +308,14 @@ function colorLine() {
         }
         , onEachFeature: onEachFeature
     }).addTo(map);
-
+		document.getElementById('polyDel').disabled = false;
+		document.getElementById('cancelDraw').disabled = true
+	    $('#polyDel').click(function () {
+        map.removeLayer(drawnItems);
+        map.removeLayer(mylayer);
+    });
+	
+	}
 };
 
 function onEachFeature(feature, layer) {
@@ -317,11 +324,11 @@ function onEachFeature(feature, layer) {
 };
 
 function buildJsonText(){
-    if(document.getElementById("dateStartLine").value == "" || document.getElementById('dayStartLine').value =="null" ||document.getElementById('timeWindow1Line').length == "" ){
+    if(document.getElementById("dateStartLine").value == "" || document.getElementById("dateEndLine").value == "" || document.getElementById('dayStartLine').value =="null" || document.getElementById('dayEndLine').value =="null" || document.getElementById('timeWindow1Line').length == "" || document.getElementById('timeWindow2Line').length == "" ){
         alert("Sie haben wichtige Eingabeparameter vergessen!");
         document.getElementById("polyDel").click();
         drawHandler.disable();
-        return;
+        return false;
     }else{
     text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "'+document.getElementById("dateStartLine").value+'T00:00:01Z","dateEnd":"'+document.getElementById("dateEndLine").value+'T00:00:01Z","dayOfWeekStart":'+document.getElementById('dayStartLine').value+',"dayOfWeekEnd": '+document.getElementById('dayEndLine').value +',"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": 70.0}';
     

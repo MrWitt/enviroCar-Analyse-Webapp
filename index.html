@@ -86,10 +86,12 @@
                     <input type="text" id="timeWindow2Line" placeholder="12:30" />Uhr.</p>
                 <hr style="border:solid #0099FF 1px;">
                 <p>
-                    <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false; document.getElementById('polyDel').disabled = false;" value="Linie Zeichnen" />
+                    <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false;" value="Linie Zeichnen" />
                     <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" value="Abbrechen" disabled />
                     <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
                 </p>
+				<hr style="border:solid #0099FF 1px;">
+				<div id="loaderText" style="text-align: center;">Diese Abfrage kann einige Minuten in Anspruch nehmen!</div>
             </div>
 
             <div id="Kreis" class="geometry">
@@ -157,10 +159,6 @@
                 document.getElementById(geomName).style.display = "block";
             }
         </script>
-
-
-
-
         <script>
             openTime("Abfragezeiträume")
 

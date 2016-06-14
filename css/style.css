@@ -45,6 +45,12 @@ body {
     display: none;
 }
 
+#loaderText {
+    position: absolute;
+    z-index: 3;
+	display: none;
+}
+
 
 }
 input[type=number] {
