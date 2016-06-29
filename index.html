@@ -82,8 +82,8 @@
 			</a>
 
                 <p>Von
-                    <input type="text" id="timeWindow1Line" placeholder="06:00" />Uhr bis
-                    <input type="text" id="timeWindow2Line" placeholder="12:30" />Uhr.</p>
+                    <input type="text" id="timeWindow1Line" value="00:00" />Uhr bis
+                    <input type="text" id="timeWindow2Line" value="23:59" />Uhr.</p>
                 <hr style="border:solid #0099FF 1px;">
                 <p>
                     <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false;" value="Linie Zeichnen" />
@@ -97,13 +97,13 @@
             <div id="Kreis" class="geometry">
                 <h3>Kreis</h3>
                 <p>Radius:
-                    <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="0" /> m
+                    <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="20" /> m
                 </p>
                 <br>
                 <ul class="w3-navbar w3-blue" style="width:35vw; margin-left:-1vw;">
                     <li><a>Abfragezeiträume:</a></li>
-                    <li><a onclick="openTime('Zeitfenster')">Zeitfenster</a></li>
-                    <li><a onclick="openTime('Zeitintervall')">Zeitintervall</a></li>
+                    <li><a onclick="openTime('Zeitfenster');alert('You are clicking on me');">Zeitfenster</a></li>
+                    <li><a onclick="openTime('Zeitintervall');alert('And now clicking on me');">Datumsintervall</a></li>
                 </ul>
 
                 <div id="Abfragezeiträume" class="time">
@@ -129,14 +129,14 @@
 			</a>
 
                     <p>Optional von
-                        <input type="text" id="timeWindow1" placeholder="z.B. 6" /> bis
-                        <input type="text" id="timeWindow2" placeholder="z.B. 12" />Uhr <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
+                        <input type="text" id="timeWindow1" value="0" /> bis
+                        <input type="text" id="timeWindow2" value="23" />Uhr <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
                   
 
                 </div>
 
                 <div id="Zeitintervall" class="time">
-                    <h4>Zeitintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox2"/></h4>
+                    <h4>Datumsintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox2"/></h4>
                     <p>Zwischen dem
                         <input type="text" id="dateStart" placeholder="Datum" \> und
                         <input type="text" id="dateEnd" placeholder="Datum" \> </p>
