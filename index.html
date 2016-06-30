@@ -20,6 +20,7 @@
         $(function () {
             $("#dateStartLine").datepicker({dateFormat: "yy-mm-dd"});
             $("#dateEndLine").datepicker({dateFormat: "yy-mm-dd"});
+			$("#dateEndLine").datepicker('setDate', new Date());
             $("#dateStart").datepicker();
             $("#dateEnd").datepicker();
 			$("#dateEnd").datepicker('setDate', new Date());
@@ -49,8 +50,8 @@
             <div style="" id="Linie" class="geometry">
                 <h3>Linie</h3>
                 <p>Zwischen dem
-                    <input type="text" id="dateStartLine" placeholder="Datum" \> und
-                    <input type="text" id="dateEndLine" placeholder="Datum" \> </p>
+                    <input type="text" id="dateStartLine" value="2010-01-01" \> und
+                    <input type="text" id="dateEndLine" \> </p>
                 <p>die Wochentage
                     <select id="dayStartLine">
                         <option value="null">Auswahl</option>
