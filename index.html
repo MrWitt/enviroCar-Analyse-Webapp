@@ -22,6 +22,7 @@
             $("#dateEndLine").datepicker({dateFormat: "yy-mm-dd"});
             $("#dateStart").datepicker();
             $("#dateEnd").datepicker();
+			$("#dateEnd").datepicker('setDate', new Date());
         });
     </script>
 </head>
@@ -36,13 +37,13 @@
 
         <ul class="w3-navbar w3-blue">
             <li><a>Abfragegeometrien:</a></li>
-            <li><a onclick="openCity('Linie')">Linie</a></li>
+            <li><a onclick="openCity('Linie');document.getElementById('ZeitfensterBox').checked = false;document.getElementById('ZeitfensterBox2').checked = false">Linie</a></li>
             <li><a onclick="openCity('Kreis')">Kreis</a></li>
         </ul>
 
 
         <div style="height:6.8vw;" id="Abfragegeometrie" class="geometry">
-            <p>Wählen Sie eine Geometrie.</p>
+            <p>Wählen Sie eine der oben angegebenen Geometrie.</p>
         </div>
         <div style="padding: 1vw;">
             <div style="" id="Linie" class="geometry">
@@ -53,23 +54,23 @@
                 <p>die Wochentage
                     <select id="dayStartLine">
                         <option value="null">Auswahl</option>
-                        <option value="1">Montag</option>
-                        <option value="2">Dienstag</option>
-                        <option value="3">Mittwoch</option>
-                        <option value="4">Donnerstag</option>
-                        <option value="5">Freitag</option>
-                        <option value="6">Samstag</option>
-                        <option value="0">Sonntag</option>
+                        <option value="2">Montag</option>
+                        <option value="3">Dienstag</option>
+                        <option value="4">Mittwoch</option>
+                        <option value="5">Donnerstag</option>
+                        <option value="6">Freitag</option>
+                        <option value="7">Samstag</option>
+                        <option value="1">Sonntag</option>
                     </select> bis
                     <select id="dayEndLine">
                         <option value="null">Auswahl</option>
-                        <option value="1">Montag</option>
-                        <option value="2">Dienstag</option>
-                        <option value="3">Mittwoch</option>
-                        <option value="4">Donnerstag</option>
-                        <option value="5">Freitag</option>
-                        <option value="6">Samstag</option>
-                        <option value="0">Sonntag</option>
+                        <option value="2">Montag</option>
+                        <option value="3">Dienstag</option>
+                        <option value="4">Mittwoch</option>
+                        <option value="5">Donnerstag</option>
+                        <option value="6">Freitag</option>
+                        <option value="7">Samstag</option>
+                        <option value="1">Sonntag</option>
                     </select>abfragen.
                 </p>
 
@@ -102,8 +103,8 @@
                 <br>
                 <ul class="w3-navbar w3-blue" style="width:35vw; margin-left:-1vw;">
                     <li><a>Abfragezeiträume:</a></li>
-                    <li><a onclick="openTime('Zeitfenster');alert('You are clicking on me');">Zeitfenster</a></li>
-                    <li><a onclick="openTime('Zeitintervall');alert('And now clicking on me');">Datumsintervall</a></li>
+                    <li><a onclick="openTime('Zeitfenster');document.getElementById('ZeitfensterBox').checked = true;document.getElementById('ZeitfensterBox2').checked = false">Zeitfenster</a></li>
+                    <li><a onclick="openTime('Zeitintervall');document.getElementById('ZeitfensterBox2').checked = true;document.getElementById('ZeitfensterBox').checked = false">Datumsintervall</a></li>
                 </ul>
 
                 <div id="Abfragezeiträume" class="time">
@@ -111,7 +112,7 @@
                 </div>
 
                 <div id="Zeitfenster" class="time">
-                    <h4>Zeitfenster nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox" /></h4>
+                    <h4>Zeitfenster nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw; visibility: hidden;" id="ZeitfensterBox" /></h4>
                     <p>Tag:
                         <select id="day">
                             <option value="null">Auswahl</option>
@@ -120,7 +121,7 @@
                             <option value="Sonntag">Sonntag</option>
                         </select>
                     </p>
-                    <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:5.5vw; text-align:center; ">
+                    <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:7.5vw; text-align:center; ">
                 ?
 				<span>
 					<strong>Zeitfenster</strong><br />
@@ -136,10 +137,10 @@
                 </div>
 
                 <div id="Zeitintervall" class="time">
-                    <h4>Datumsintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw;" id="ZeitfensterBox2"/></h4>
+                    <h4>Datumsintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw; visibility: hidden;" id="ZeitfensterBox2"/></h4>
                     <p>Zwischen dem
-                        <input type="text" id="dateStart" placeholder="Datum" \> und
-                        <input type="text" id="dateEnd" placeholder="Datum" \> </p>
+                        <input type="text" id="dateStart" value="01/01/2010" \> und
+                        <input type="text" id="dateEnd" value="" \> </p>
                 </div>
 
 
@@ -186,12 +187,12 @@
     </div>
     <div id="loader" style="background:url(loader/gears.gif) no-repeat center center;width:100%;height:100%;">
     </div>   
-   <div class="dropdown" style="z-index:4;">
+   <!--<div class="dropdown" style="z-index:4;">
         <button onclick="slideDownInfo()" class="dropbtn">Information</button>
        <div id="myDropdown" class="dropdown-content">
            <p style="padding:1vw;">Diese Anwendung ermöglicht unter Angabe eines Zeitfensters und einer Gebietsgröße, die durchschnittlichen Geschwindigkeiten in einem von Ihnen bestimmten Gebiet zu berechnen und als .csv-Datei zur Verfügung zu stellen. <br>Mehr zum EnviroCar Projekt gibt es hier: <a href="https://envirocar.org/" target="_blank">Envirocar Homepage </a></p>
            </div>
-    </div>
+    </div>-->
 
 </body>
 

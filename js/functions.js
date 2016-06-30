@@ -195,8 +195,8 @@ function loadStats() {
 
 
 function setCirc() {
-    bufVal = document.getElementById('buffer').value;
-    filterCircle.setRadius(bufVal);
+timeWindowStart = document.getElementById('timeWindow1').value;
+timeWindowEnd = document.getElementById('timeWindow2').value;
 }
 
 var filterCircle = L.circle(L.latLng(0, 0), 0, {
@@ -257,7 +257,7 @@ map.on('draw:created', function (e) {
     buildJsonText();
     var jsonText = JSON.parse(text);
     $.extend(jsonText.geometry.coordinates, shape.geometry.coordinates);
-    alert(JSON.stringify(jsonText));
+    /*alert(JSON.stringify(jsonText));*/
     $("#loader").show("slow");
 	$("#loaderText").show("slow");
     $.ajax({
@@ -269,7 +269,7 @@ map.on('draw:created', function (e) {
         , /*contentType: "application/json;charset=utf-8",*/
         success: function (result) {
             jsonResult = result.features;
-            alert("it worked!" + JSON.stringify(result));
+            /*alert("it worked!" + JSON.stringify(result));*/
             colorLine();
         }
         , error: function (xhr, status, error) {
@@ -320,7 +320,7 @@ function colorLine() {
 
 function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
-    layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(2) + "km/h." + "<br> The Maximum is " + feature.properties[index].max + "km/h and minimum is " + feature.properties[index].min + "km/h.");
+    layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(2) + "km/h." + "<br> The Maximum is " + feature.properties[index].max.toFixed(2) + "km/h and minimum is " + feature.properties[index].min + "km/h.");
 };
 
 function buildJsonText(){
@@ -366,4 +366,4 @@ $(function () {
     filterCircle.setRadius($input.val());
     }, 0);
   });
-})
+})		
