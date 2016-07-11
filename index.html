@@ -18,14 +18,15 @@
     <script src="http://leaflet.github.io/Leaflet.draw/leaflet.draw.js"></script>
     <script>
         $(function () {
-            $("#dateStartLine").datepicker({dateFormat: "yy-mm-dd"});
-            $("#dateEndLine").datepicker({dateFormat: "yy-mm-dd"});
+            $("#dateStartLine").datepicker({dateFormat: "mm-dd-yy"});
+            $("#dateEndLine").datepicker({dateFormat: "mm-dd-yy"});
 			$("#dateEndLine").datepicker('setDate', new Date());
             $("#dateStart").datepicker();
             $("#dateEnd").datepicker();
 			$("#dateEnd").datepicker('setDate', new Date());
         });
     </script>
+	
 </head>
 
 <body>
@@ -37,119 +38,66 @@
     <div id="menu">
 
         <ul class="w3-navbar w3-blue">
-            <li><a>Abfragegeometrien:</a></li>
-            <li><a onclick="openCity('Linie');document.getElementById('ZeitfensterBox').checked = false;document.getElementById('ZeitfensterBox2').checked = false">Linie</a></li>
-            <li><a onclick="openCity('Kreis')">Kreis</a></li>
+            <li><a>Abfrage:</a></li>
+            <li><a onclick="openCity('Linie');">Formularfeld</a></li>
         </ul>
 
-
-        <div style="height:6.8vw;" id="Abfragegeometrie" class="geometry">
-            <p>Wählen Sie eine der oben angegebenen Geometrie.</p>
-        </div>
         <div style="padding: 1vw;">
             <div style="" id="Linie" class="geometry">
-                <h3>Linie</h3>
                 <p>Zwischen dem
-                    <input type="text" id="dateStartLine" value="2010-01-01" \> und
-                    <input type="text" id="dateEndLine" \> </p>
-                <p>die Wochentage
-                    <select id="dayStartLine">
-                        <option value="null">Auswahl</option>
-                        <option value="2">Montag</option>
+                    <input type="text" id="dateStartLine" value="01-01-2010" \> und
+                    <input type="text" id="dateEndLine" \> 
+                die Wochentage <br>
+                    <select id="dayStartLine">  
+						<option value="1">Sonntag</option>					
+                        <option selected="selected" value="2">Montag</option>
                         <option value="3">Dienstag</option>
                         <option value="4">Mittwoch</option>
                         <option value="5">Donnerstag</option>
                         <option value="6">Freitag</option>
                         <option value="7">Samstag</option>
-                        <option value="1">Sonntag</option>
                     </select> bis
                     <select id="dayEndLine">
-                        <option value="null">Auswahl</option>
+						<option value="1">Sonntag</option>
                         <option value="2">Montag</option>
                         <option value="3">Dienstag</option>
                         <option value="4">Mittwoch</option>
-                        <option value="5">Donnerstag</option>
+                        <option selected="selected" value="5">Donnerstag</option>
                         <option value="6">Freitag</option>
                         <option value="7">Samstag</option>
-                        <option value="1">Sonntag</option>
                     </select>abfragen.
                 </p>
-
-                <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:16vw; text-align:center; ">
-                ?
-				<span>
-					<strong>Linie</strong><br />
-					Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte der Linie zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen. 
-				</span>
-			</a>
-
-                <p>Von
+                <p id="Uhrzeit">Von
                     <input type="text" id="timeWindow1Line" value="00:00" />Uhr bis
                     <input type="text" id="timeWindow2Line" value="23:59" />Uhr.</p>
+					
+					<div class="tooltip" style="z-index:3;">Vorgegebene Zeitfenster nutzen 
+					<span class="tooltiptext">Erfolgt diese Angabe, so werden vorgefertigte, zusammengefasste Zeitabschnitte 6-10Uhr,10-15Uhr,15-19Uhr und 19-6Uhr ausgegeben.</span>
+					</div>
+					<input type="checkbox" id="FesteZeit" value="FesteZeitfenster" onclick="hideTimeWindowText();"/>
+					
                 <hr style="border:solid #0099FF 1px;">
                 <p>
                     <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false;" value="Linie Zeichnen" />
                     <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" value="Abbrechen" disabled />
                     <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
                 </p>
+					<div class="tooltip" style="z-index:3;">Linie 
+					<span class="tooltiptext">Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte der Linie zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen.</span>
+					</div>
+				
+				<hr style="border:solid #0099FF 1px;">
+				<p>
+				<input type="button" id="drawCircle" onclick="startRequest()" value="Punkt setzen" />
+				Toleranz:
+                    <input type="number" min="1" max="1000" step="1" style="width: 2.5vw; height:1.2vw;" id="buffer" value="20" /> m </p>
 				<hr style="border:solid #0099FF 1px;">
 				<div id="loaderText" style="text-align: center;">Diese Abfrage kann einige Minuten in Anspruch nehmen!</div>
-            </div>
-
-            <div id="Kreis" class="geometry">
-                <h3>Kreis</h3>
-                <p>Radius:
-                    <input type="number" min="1" max="1000" step="1" style="width:3vw" id="buffer" value="20" /> m
-                </p>
-                <br>
-                <ul class="w3-navbar w3-blue" style="width:35vw; margin-left:-1vw;">
-                    <li><a>Abfragezeiträume:</a></li>
-                    <li><a onclick="openTime('Zeitfenster');document.getElementById('ZeitfensterBox').checked = true;document.getElementById('ZeitfensterBox2').checked = false">Zeitfenster</a></li>
-                    <li><a onclick="openTime('Zeitintervall');document.getElementById('ZeitfensterBox2').checked = true;document.getElementById('ZeitfensterBox').checked = false">Datumsintervall</a></li>
-                </ul>
-
-                <div id="Abfragezeiträume" class="time">
-                    <p>Wählen Sie einen Abfragezeitraum.</p>
-                </div>
-
-                <div id="Zeitfenster" class="time">
-                    <h4>Zeitfenster nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw; visibility: hidden;" id="ZeitfensterBox" /></h4>
-                    <p>Tag:
-                        <select id="day">
-                            <option value="null">Auswahl</option>
-                            <option value="Montag,Dienstag,Mittwoch,Donnerstag,Freitag">Montag-Freitag</option>
-                            <option value="Samstag">Samstag</option>
-                            <option value="Sonntag">Sonntag</option>
-                        </select>
-                    </p>
-                    <a class="tooltip" style="z-index:3; position: fixed; left: 30vw; bottom:7.5vw; text-align:center; ">
-                ?
-				<span>
-					<strong>Zeitfenster</strong><br />
-					Erfolgt im optionalen Zeitfenster keine Eingabe, so werden vorgefertigte Zeitabschnitte (6-10Uhr,10-15Uhr...) ausgegeben. 
-				</span>
-			</a>
-
-                    <p>Optional von
-                        <input type="text" id="timeWindow1" value="0" /> bis
-                        <input type="text" id="timeWindow2" value="23" />Uhr <input type="button" id="setBuf" onclick="setCirc()" value="Speichern" /></p>
-                  
-
-                </div>
-
-                <div id="Zeitintervall" class="time">
-                    <h4>Datumsintervall nutzen:<input type="checkbox" class="zeit" style="margin-left: 0.5vw; visibility: hidden;" id="ZeitfensterBox2"/></h4>
-                    <p>Zwischen dem
-                        <input type="text" id="dateStart" value="01/01/2010" \> und
-                        <input type="text" id="dateEnd" value="" \> </p>
-                </div>
-
-
             </div>
         </div>
 
         <script>
-            openCity("Abfragegeometrie")
+            openCity("Linie")
 
             function openCity(geomName) {
                 var i;
@@ -161,19 +109,7 @@
                 document.getElementById(geomName).style.display = "block";
             }
         </script>
-        <script>
-            openTime("Abfragezeiträume")
-
-            function openTime(timeName) {
-                var i;
-                var x = document.getElementsByClassName("time");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                document.getElementById(timeName).style.display = "block";
-            }
-        </script>
-
+		
     </div>
     <div id="values">
         <div id=menuButton>

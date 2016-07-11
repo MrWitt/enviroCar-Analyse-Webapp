@@ -55,10 +55,10 @@ body {
 }
 input[type=number] {
     position: absolute;
-    width: 2vw;
 }
 input[type=text] {
     width: 6.0vw;
+	height:1.0vw;
 }
 input[type=button] {
     border: 1px solid gray;
@@ -73,6 +73,10 @@ input[type=button]:hover {
     cursor: pointer;
     opacity: 1;
 }
+input[type='checkbox'] { 
+margin: 0.5vw;
+}
+
 ul,
 li {
     margin: 0;
@@ -145,16 +149,14 @@ h2 {
     cursor: pointer;
 }
 p {
-    font-size: 1vw;
-    line-height: 1.6vw;
-    ;
+    font-size: 0.9vw;
+    line-height: 2vw;
     letter-spacing: 1px;
     position: relative;
     overflow: hidden;
     max-height: 800px;
     opacity: 1;
     transform: translate(0, 0);
-    margin-top: 14px;
     z-index: 2;
 }
 @keyframes flipdown {
@@ -199,44 +201,44 @@ tr:hover {
 }
 
 /*Tooltip*/
-a.tooltip {
-    outline: none;
-    border: 2px solid #000;
-    background: #66c5e4;
-    border-radius: 0px;
-    width: 2vw;
-    height: 2vw;
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
 }
-a.tooltip strong {
-    line-height: 30px;
-}
-a.tooltip:hover {
-    text-decoration: none;
-    cursor: pointer
-}
-a.tooltip span {
-    z-index: 10;
-    display: none;
-    padding: 14px 20px;
-    margin-top: -30px;
-    margin-left: 28px;
-    width: 300px;
-    line-height: 16px;
-    cursor: pointer;
-}
-a.tooltip:hover span {
-    display: inline;
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 14vw;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 15px 0;
     position: absolute;
-    color: #111;
-    border: 1px solid #DCA;
-    background: #fffAF0;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -7vw;
+    opacity: 0;
+    transition: opacity 1s;
 }
-.callout {
-    z-index: 20;
+
+.tooltip .tooltiptext::after {
+    content: "";
     position: absolute;
-    top: 30px;
-    border: 0;
-    left: -12px;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
 
 /*SlidedownInformationEnvirocar*/

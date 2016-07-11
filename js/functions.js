@@ -1,6 +1,5 @@
 var bufVal;
 var latlng;
-var day;
 var timeWindowStart;
 var timeWindowEnd;
 var download;
@@ -9,7 +8,7 @@ var dateEnd;
 var index;
 var text;
 var jsonUrl = "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics";
-var allDays = "Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag";
+var allDays = ["Weekday", "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"]; /* String "Weekdays" inserted to fill index 0 to easify search later */
 var WMS = "http://ags.52north.org:6080";
 /* must not end with slash */
 var WPS = "http://processing.envirocar.org:8080/wps";
@@ -43,36 +42,32 @@ map.addControl(new L.Control.Layers({}, {
 }));
 
 function onMapClick(e) {
-    popup
-    /*.setLatLng(e.latlng)
+    /*popup
+    .setLatLng(e.latlng)
     .setContent("You clicked the map at " + e.latlng.toString())
     .openOn(map);*/
     latlng = e.latlng.lat + " " + e.latlng.lng;
     loadStats();
 }
+function startRequest(){
 map.on('click', onMapClick);
+map.on('mousemove', function (e) {
+    filterCircle.setLatLng(e.latlng);
+});
+}
 
 function loadStats() {
 
-    if (document.getElementById("ZeitfensterBox").checked && document.getElementById("ZeitfensterBox2").checked) {
-        alert("Deaktivieren Sie bitte eine der Zeitfensterabfragen.");
-        return;
-    }
     bufVal = document.getElementById('buffer').value;
-    if (document.getElementById("ZeitfensterBox").checked) {
-        var dtS = "null";
-        var dtE = "null";
-        day = document.getElementById('day').value;
-        if (day == "null") {
-            alert("Bitte wählen Sie ein Tagfenster!");
-            return;
-        }
-        timeWindowStart = document.getElementById('timeWindow1').value;
-        timeWindowEnd = document.getElementById('timeWindow2').value;
-        if (timeWindowStart.length == 0 || timeWindowEnd.length == 0) {
-            timeWindowStart = 0;
-            timeWindowEnd = 0;
-        }
+    if (!document.getElementById("FesteZeit").checked) {
+        var dtS = document.getElementById("dateStartLine").value;
+        var dtE = document.getElementById("dateEndLine").value;
+		var dayIndexStart = document.getElementById("dayStartLine").value;
+		var dayIndexEnd =  parseInt(document.getElementById("dayEndLine").value) + 1;
+		var day = allDays.slice(dayIndexStart,dayIndexEnd);
+		alert(" "+day)		
+		timeWindowStart = document.getElementById('timeWindow1Line').value.substring(0,2);
+        timeWindowEnd = document.getElementById('timeWindow2Line').value.substring(0,2);
         if ((bufVal.length) == 0) {
             alert("Bitte bestimmen Sie den Radius!");
             return;
@@ -80,7 +75,7 @@ function loadStats() {
             $("#loader").show("slow");
             console.log(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv");
 
-            $.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv", function (data) {
+            $.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" +  day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv", function (data) {
                     var download = WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv";
                     document.getElementById("download").setAttribute("href", download);
                     // start the table
@@ -122,30 +117,19 @@ function loadStats() {
                     $("#loader").hide("slow");
                 })
         }
-    } else if (document.getElementById("ZeitfensterBox2").checked) {
-        dateStart = document.getElementById("dateStart").value;
-        dateEnd = document.getElementById("dateEnd").value;
-        if (dateStart.length == 0 || dateEnd.length == 0) {
-            alert("Bitte bestimmen Sie den Abfragezeitraum!");
-            return;
-        }
-        var dtS = dateStart.replace(/\//g, "-");
-        var dtE = dateEnd.replace(/\//g, "-");
-        timeWindowStart = document.getElementById('timeWindow1').value;
-        timeWindowEnd = document.getElementById('timeWindow2').value;
-        if (timeWindowStart.length == 0 || timeWindowEnd.length == 0) {
-            timeWindowStart = 0;
-            timeWindowEnd = 0;
-        }
+    } else if (document.getElementById("FesteZeit").checked) {
+        var dtS = document.getElementById("dateStartLine").value;
+        var dtE = document.getElementById("dateEndLine").value;
+        
         if ((bufVal.length) == 0) {
             alert("Bitte bestimmen Sie den Radius!");
             return;
         } else {
             $("#loader").show("slow");
 
-            console.log(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + allDays + ";timeWindowStart=0;timeWindowEnd=0;dateStart=" + dtS + ";dateEnd=" + dtE + " &RawDataOutput=result@mimeType=application/csv");
+            console.log(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + allDays + ";timeWindowStart=0;timeWindowEnd=0;dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv");
 
-            $.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + allDays + ";timeWindowStart=0;timeWindowEnd=0;dateStart=" + dtS + ";dateEnd=" + dtE + " &RawDataOutput=result@mimeType=application/csv", function (data) {
+            $.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + allDays + ";timeWindowStart=0;timeWindowEnd=0;dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv", function (data) {
                     var download = WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + allDays + ";timeWindowStart=0;timeWindowEnd=0;dateStart=" + dtS + ";dateEnd=" + dtE + " &RawDataOutput=result@mimeType=application/csv";
                     document.getElementById("download").setAttribute("href", download);
                     // start the table
@@ -205,9 +189,6 @@ var filterCircle = L.circle(L.latLng(0, 0), 0, {
     , fillOpacity: 0.4
 }).addTo(map);
 
-map.on('mousemove', function (e) {
-    filterCircle.setLatLng(e.latlng);
-});
 
 function hide() {
     $("#values").hide('slow');
@@ -225,6 +206,10 @@ function display() {
 function remCon() {
     $("#values2").empty();
 }
+
+function hideTimeWindowText() {
+	$("#Uhrzeit").toggle(10);
+};
 
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
