@@ -38,8 +38,9 @@
     <div id="menu">
 
         <ul class="w3-navbar w3-blue">
-            <li><a>Abfrage:</a></li>
-            <li><a onclick="openCity('Linie');">Formularfeld</a></li>
+            <li><a>EnviroCar Statistics:</a></li>
+            <li><a onclick="openCity('Linie');">Abfrageparameter</a></li>
+			<li><a onclick="openCity('Information');">Weitere Informationen</a></li>
         </ul>
 
         <div style="padding: 1vw;">
@@ -71,7 +72,7 @@
                     <input type="text" id="timeWindow1Line" value="00:00" />Uhr bis
                     <input type="text" id="timeWindow2Line" value="23:59" />Uhr.</p>
 					
-					<div class="tooltip" style="z-index:3;">Vorgegebene Zeitfenster nutzen 
+					<div class="tooltip" style="z-index:3;">Vorgegebene Zeitfenster nutzen
 					<span class="tooltiptext">Erfolgt diese Angabe, so werden vorgefertigte, zusammengefasste Zeitabschnitte 6-10Uhr,10-15Uhr,15-19Uhr und 19-6Uhr ausgegeben.</span>
 					</div>
 					<input type="checkbox" id="FesteZeit" value="FesteZeitfenster" onclick="hideTimeWindowText();"/>
@@ -81,7 +82,7 @@
                     <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false;" value="Linie Zeichnen" />
                     <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" value="Abbrechen" disabled />
                     <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
-                </p>
+				</p>
 					<div class="tooltip" style="z-index:3;">Linie 
 					<span class="tooltiptext">Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte der Linie zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen.</span>
 					</div>
@@ -94,6 +95,10 @@
 				<hr style="border:solid #0099FF 1px;">
 				<div id="loaderText" style="text-align: center;">Diese Abfrage kann einige Minuten in Anspruch nehmen!</div>
             </div>
+			 <div style="" id="Information" class="geometry">
+			  <p style="padding:1vw;">Diese Anwendung ermöglicht unter Angabe eines Zeitfensters und einer Gebietsgröße, die durchschnittlichen Geschwindigkeiten in einem von Ihnen bestimmten Gebiet zu berechnen und als .csv-Datei zur Verfügung zu stellen. <br>Mehr zum EnviroCar Projekt gibt es hier:<br> <a href="https://envirocar.org/" target="_blank">Envirocar Homepage </a></p>
+			 <div>
+			 
         </div>
 
         <script>
@@ -124,12 +129,6 @@
     </div>
     <div id="loader" style="background:url(loader/gears.gif) no-repeat center center;width:100%;height:100%;">
     </div>   
-   <!--<div class="dropdown" style="z-index:4;">
-        <button onclick="slideDownInfo()" class="dropbtn">Information</button>
-       <div id="myDropdown" class="dropdown-content">
-           <p style="padding:1vw;">Diese Anwendung ermöglicht unter Angabe eines Zeitfensters und einer Gebietsgröße, die durchschnittlichen Geschwindigkeiten in einem von Ihnen bestimmten Gebiet zu berechnen und als .csv-Datei zur Verfügung zu stellen. <br>Mehr zum EnviroCar Projekt gibt es hier: <a href="https://envirocar.org/" target="_blank">Envirocar Homepage </a></p>
-           </div>
-    </div>-->
 
 </body>
 

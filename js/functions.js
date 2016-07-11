@@ -53,6 +53,7 @@ function startRequest(){
 map.on('click', onMapClick);
 map.on('mousemove', function (e) {
     filterCircle.setLatLng(e.latlng);
+	filterCircle.setRadius(20);
 });
 }
 
@@ -319,27 +320,6 @@ function buildJsonText(){
     
     return(text);
     }
-}
-
-/* When the user clicks on the button, 
-toggle between hiding and showing the slidedown Information for Envirocar content */
-function slideDownInfo() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
 }
 
 //Update Buffer in Realtime
