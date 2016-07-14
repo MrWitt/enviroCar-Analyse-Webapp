@@ -51,12 +51,14 @@ function onMapClick(e) {
 	loadStats();
 	map.off('click', onMapClick);
 }
+
+map.on('mousemove', function (e) {
+		filterCircle.setLatLng(e.latlng);
+});
+
+
 function startRequest() {
 	map.on('click', onMapClick);
-	map.on('mousemove', function (e) {
-		filterCircle.setLatLng(e.latlng);
-		/*filterCircle.setRadius(20);*/
-	});
 }
 
 function loadStats() {
@@ -80,6 +82,7 @@ function loadStats() {
 		return;
 	} else {
 		$("#loader").show("slow");
+		$("#loaderText").show("slow");
 		console.log(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv");
 		$.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv", function (data) {
 			var download = WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv";
@@ -111,16 +114,19 @@ function loadStats() {
 			html += "</table>";
 
 			// insert into div
-			remCon();
+			$("#values2").empty();
 			$('#values2').append(html);
 
 		})
 		.done(function () {
 			display();
+			document.getElementById('cancelDrawCircle').disabled = true;
+			$("#loaderText").hide("slow");
 		})
 		.fail(function () {
 			alert("error");
 			$("#loader").hide("slow");
+			$("#loaderText").hide("slow");
 		})
 	}
 };
@@ -130,7 +136,7 @@ function setCirc() {
 	timeWindowEnd = document.getElementById('timeWindow2').value;
 }
 
-var filterCircle = L.circle(L.latLng(0, 0), 0, {
+var filterCircle = L.circle(L.latLng(0, 0), 20, {
 		opacity : 1,
 		weight : 1,
 		fillOpacity : 0.4
@@ -146,11 +152,6 @@ function display() {
 	$("#values").show('slow');
 	$("#values2").show('slow');
 	$("#loader").hide("slow");
-
-}
-
-function remCon() {
-	$("#values2").empty();
 }
 
 function hideTimeWindowText() {
@@ -259,8 +260,7 @@ function buildJsonText() {
 		drawHandler.disable();
 		return false;
 	} else {
-		text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "' + document.getElementById("dateStartLine").value + 'T00:00:01Z","dateEnd":"' + document.getElementById("dateEndLine").value + 'T00:00:01Z","dayOfWeekStart":' + document.getElementById('dayStartLine').value + ',"dayOfWeekEnd": ' + document.getElementById('dayEndLine').value + ',"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": 70.0}';
-
+		text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "' + document.getElementById("dateStartLine").value + 'T00:00:01Z","dateEnd":"' + document.getElementById("dateEndLine").value + 'T00:00:01Z","dayOfWeekStart":' + document.getElementById('dayStartLine').value + ',"dayOfWeekEnd": ' + document.getElementById('dayEndLine').value + ',"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": '+document.getElementById('bufVal').value+'}';
 		return (text);
 	}
 }

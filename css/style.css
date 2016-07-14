@@ -32,9 +32,9 @@ body {
 }
 
 #menuButton {
-    height: 5%;
-    width: 90%;
-    margin-left: 14%;
+    height: 3vw;
+    width: 20vw;
+    margin-left: 1vw;
 }
 
 #loader {
@@ -66,6 +66,7 @@ input[type=button] {
     cursor: pointer;
     opacity: 1;
     font-size: 0.8vw;
+	width: 6vw;
 }
 input[type=button]:hover {
     border: 1px solid black;
@@ -149,9 +150,9 @@ h2 {
     cursor: pointer;
 }
 p {
-    font-size: 0.9vw;
+    font-size: 0.8vw;
     line-height: 2vw;
-    letter-spacing: 1px;
+    letter-spacing: 0px;
     position: relative;
     overflow: hidden;
     max-height: 800px;
@@ -206,6 +207,9 @@ tr:hover {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
+	font-size: 0.8vw;
+    line-height: 1vw;
+    letter-spacing: 0px;
 }
 
 .tooltip .tooltiptext {

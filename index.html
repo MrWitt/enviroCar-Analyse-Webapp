@@ -68,31 +68,32 @@
                         <option value="7">Samstag</option>
                     </select>abfragen.
                 </p>
+				
                 <p id="Uhrzeit">Von
                     <input type="text" id="timeWindow1Line" value="00:00" />Uhr bis
                     <input type="text" id="timeWindow2Line" value="23:59" />Uhr.</p>
 					
-					<div class="tooltip" style="z-index:3;">Vorgegebene Zeitfenster nutzen
+					<div class="tooltip" style="z-index:3;">Stattdessen vorgefertigte Zeitfenster nutzen
 					<span class="tooltiptext">Erfolgt diese Angabe, so werden vorgefertigte, zusammengefasste Zeitabschnitte 6-10Uhr,10-15Uhr,15-19Uhr und 19-6Uhr ausgegeben.</span>
 					</div>
 					<input type="checkbox" id="FesteZeit" value="FesteZeitfenster" onclick="hideTimeWindowText();"/>
 					
                 <hr style="border:solid #0099FF 1px;">
-                <p>
-                    <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false;" value="Linie Zeichnen" />
-                    <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" value="Abbrechen" disabled />
-                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
+				Toleranz:			
+                    <input type="tel" min="1" max="1000" step="1" style="width: 2.5vw; height:1.2vw;" id="buffer" value="20" /> m 
+					<p style=" bottom: 1.4vw; left: 11vw;">
+				<input type="button" id="drawCircle" onclick="startRequest();document.getElementById('cancelDrawCircle').disabled = false;" value="Punkt setzen" />
+				<input type="button" id="cancelDrawCircle" onclick="map.off('click', onMapClick);filterCircle.setRadius(0); document.getElementById('cancelDrawCircle').disabled = true;" value="Abbrechen" disabled />
 				</p>
-					<div class="tooltip" style="z-index:3;">Linie 
+				<p style=" bottom: 1vw; left: 11vw;">
+                  <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false; document.getElementById('drawCircle').disabled = true;" value="Linie Zeichnen"/>
+                    <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;document.getElementById('drawCircle').disabled = false;" value="Abbrechen" disabled />
+                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
+					<!--<div class="tooltip" style="z-index:3;">Hilfe 
 					<span class="tooltiptext">Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte der Linie zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen.</span>
-					</div>
-				
-				<hr style="border:solid #0099FF 1px;">
-				<p>
-				<input type="button" id="drawCircle" onclick="startRequest()" value="Punkt setzen" />
-				Toleranz:
-                    <input type="number" min="1" max="1000" step="1" style="width: 2.5vw; height:1.2vw;" id="buffer" value="20" /> m </p>
-				<hr style="border:solid #0099FF 1px;">
+					</div>	-->	
+				</p>					
+					<hr style="border:solid #0099FF 1px;">
 				<div id="loaderText" style="text-align: center;">Diese Abfrage kann einige Minuten in Anspruch nehmen!</div>
             </div>
 			 <div style="" id="Information" class="geometry">
@@ -106,7 +107,7 @@
 
             function openCity(geomName) {
                 var i;
-                filterCircle.setRadius(0)
+                /*filterCircle.setRadius(0)*/
                 var x = document.getElementsByClassName("geometry");
                 for (i = 0; i < x.length; i++) {
                     x[i].style.display = "none";
@@ -120,8 +121,7 @@
             <a id="download">
                 <button class="button">Tabelle herunterladen</button>
             </a>
-            <input type="button" id="clear" onclick="remCon()" value="Tabelle löschen" />
-            <input type="button" id="close" onclick="hide()" value="Fenster schließen" style="margin-left: 35%;" />
+            <input type="button" id="close" onclick="hide()" value="Schließen " style="margin-left: 1vw;" />
         </div>
     </div>
     <div id="values2" style="border:solid #5bbde8 2px; overflow:scroll;">
