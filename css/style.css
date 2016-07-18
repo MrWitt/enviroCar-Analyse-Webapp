@@ -197,8 +197,11 @@ th,
 td {
     border: 1px solid #626250;
 }
+tr{
+	border: 1px solid #9d9d9d;
+}
 tr:hover {
-    background-color: #f5f5f5
+    background-color: #dfdfdf
 }
 
 /*Tooltip*/
@@ -214,17 +217,16 @@ tr:hover {
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 14vw;
+    width: 16vw;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 15px 0;
+    padding: 15px;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -7vw;
+	bottom: 1.5vw;
+	margin-left:-9vw;
     opacity: 0;
     transition: opacity 1s;
 }

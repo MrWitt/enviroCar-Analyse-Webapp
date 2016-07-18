@@ -69,7 +69,7 @@ function loadStats() {
 	var dayIndexStart = document.getElementById("dayStartLine").value;
 	var dayIndexEnd = parseInt(document.getElementById("dayEndLine").value) + 1;
 	var day = allDays.slice(dayIndexStart, dayIndexEnd);
-	alert(" " + day)
+	/*alert(" " + day);*/
 	if (!document.getElementById("FesteZeit").checked) {
 		timeWindowStart = document.getElementById('timeWindow1Line').value.substring(0, 2);
 		timeWindowEnd = document.getElementById('timeWindow2Line').value.substring(0, 2);
@@ -121,6 +121,7 @@ function loadStats() {
 		.done(function () {
 			display();
 			document.getElementById('cancelDrawCircle').disabled = true;
+			document.getElementById('polyLine').disabled = false;
 			$("#loaderText").hide("slow");
 		})
 		.fail(function () {
@@ -155,7 +156,7 @@ function display() {
 }
 
 function hideTimeWindowText() {
-	$("#Uhrzeit").toggle(10);
+	$("#Clock").toggle(10);
 };
 
 var drawnItems = new L.FeatureGroup();
@@ -253,22 +254,19 @@ function onEachFeature(feature, layer) {
 	layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(2) + "km/h." + "<br> The Maximum is " + feature.properties[index].max.toFixed(2) + "km/h and minimum is " + feature.properties[index].min + "km/h.");
 };
 
-function buildJsonText() {
-	if (document.getElementById("dateStartLine").value == "" || document.getElementById("dateEndLine").value == "" || document.getElementById('dayStartLine').value == "null" || document.getElementById('dayEndLine').value == "null" || document.getElementById('timeWindow1Line').length == "" || document.getElementById('timeWindow2Line').length == "") {
-		alert("Sie haben wichtige Eingabeparameter vergessen!");
-		document.getElementById("polyDel").click();
-		drawHandler.disable();
-		return false;
-	} else {
-		text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "' + document.getElementById("dateStartLine").value + 'T00:00:01Z","dateEnd":"' + document.getElementById("dateEndLine").value + 'T00:00:01Z","dayOfWeekStart":' + document.getElementById('dayStartLine').value + ',"dayOfWeekEnd": ' + document.getElementById('dayEndLine').value + ',"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": '+document.getElementById('bufVal').value+'}';
+function buildJsonText(){
+		dateStart = $("#dateStartLine").datepicker('getDate');
+		dateStart = $.datepicker.formatDate('yy-mm-dd', dateStart);
+		dateEnd = $("#dateEndLine").datepicker('getDate');
+		dateEnd = $.datepicker.formatDate('yy-mm-dd', dateEnd);		
+		text = '{"type": "Feature","geometry": {"type": "LineString","coordinates": []},"timeInterval":{"dateStart": "' + dateStart + 'T00:00:01Z","dateEnd":"' + dateEnd + 'T00:00:01Z","dayOfWeekStart":' + document.getElementById('dayStartLine').value + ',"dayOfWeekEnd": ' + document.getElementById('dayEndLine').value + ',"daytimeStart":"' + document.getElementById('timeWindow1Line').value + '","daytimeEnd":"' + document.getElementById('timeWindow2Line').value + '"},"tolerance": '+document.getElementById('buffer').value+'}';
 		return (text);
 	}
-}
 
 //Update Buffer in Realtime
 $(function () {
 	var $input = $('#buffer');
-	$input.on('keydown', function () {
+	$input.on('keypress', function () {
 		setTimeout(function () {
 			bufVal = document.getElementById('buffer').value;
 			filterCircle.setRadius($input.val());
