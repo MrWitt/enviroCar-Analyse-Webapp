@@ -52,10 +52,6 @@ body {
 }
 
 
-}
-input[type=number] {
-    position: absolute;
-}
 input[type=text] {
     width: 6.0vw;
 	height:1.0vw;
@@ -87,7 +83,7 @@ li {
     position: fixed;
     height: 50%;
     width: 35%;
-    top: 55%;
+    top: 50%;
     left: 2%;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.8);
@@ -96,7 +92,7 @@ li {
     position: fixed;
     height: 50%;
     width: 35%;
-    top: 55%;
+    top: 50%;
     left: 2%;
     z-index: 2;
 }
@@ -130,7 +126,7 @@ h1,
 ul li {
     animation: flipdown 0.5s ease both;
 }
-.no-select,
+
 h2 {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
