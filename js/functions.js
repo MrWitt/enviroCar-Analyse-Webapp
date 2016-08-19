@@ -33,8 +33,14 @@ var speedTracks = L.tileLayer.wms(WMS + "/arcgis/services/enviroCar/aggregation/
 		layers : 0,
 		format : 'image/png',
 		transparent : true,
+        unloadInvisibleTiles: true,
+        updateWhenIdle: false,
 		attribution : "EnviroCar Tracks"
 	}).addTo(map);
+
+map.on('zoomstart', function() {
+    speedTracks.redraw();
+});
 
 map.addControl(new L.Control.Layers({}, {
 		'EnviroCar Tracks ' : speedTracks
