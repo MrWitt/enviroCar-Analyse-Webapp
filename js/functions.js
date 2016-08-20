@@ -28,7 +28,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	/*id : 'mapbox.streets'*/
 }).addTo(map);
 
-var popup = L.popup();
+var popup /*= L.popup();*/
 var speedTracks = L.tileLayer.wms(WMS + "/arcgis/services/enviroCar/aggregation/MapServer/WMSServer", {
 		layers : 0,
 		format : 'image/png',
@@ -159,7 +159,6 @@ var filterCircle = L.circle(L.latLng(0, 0), 20, {
 function hide() {
 	$("#values").hide('slow');
 	$("#values2").hide('slow');
-	remCon();
 }
 
 function display() {
@@ -247,24 +246,26 @@ function colorLine() {
 					return {
 						"color" : getColor(feature.properties[index].avg),
 						"weight" : 5,
+						"lineCap" : "square",
+						"stroke" : true,
 						"opacity" : 1,
 					}
 				},
 				onEachFeature : onEachFeature
 			}).addTo(map);
+			popup.openPopup();
 		document.getElementById('polyDel').disabled = false;
 		document.getElementById('cancelDraw').disabled = true
 			$('#polyDel').click(function () {
 				map.removeLayer(drawnItems);
 				map.removeLayer(mylayer);
 			});
-
 	}
 };
 
 function onEachFeature(feature, layer) {
 	// does this feature have a property named popupContent?
-	layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(1) + "km/h." + "<br> The Maximum is " + feature.properties[index].max.toFixed(1) + "km/h and minimum is " + feature.properties[index].min.toFixed(1) + "km/h.");
+	 popup = layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(1) + "km/h." + "<br> The Maximum is " + feature.properties[index].max.toFixed(1) + "km/h and minimum is " + feature.properties[index].min.toFixed(1) + "km/h.");
 };
 
 function buildJsonText(){
