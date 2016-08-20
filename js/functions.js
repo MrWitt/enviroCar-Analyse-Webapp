@@ -93,6 +93,13 @@ function loadStats() {
 		$.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv", function (data) {
 			var download = WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv";
 			document.getElementById("download").setAttribute("href", download);
+			dS = $("#dateStartLine").datepicker('getDate');
+			dS = $.datepicker.formatDate('dd-mm-yy', dS);
+			dE = $("#dateEndLine").datepicker('getDate');
+			dE = $.datepicker.formatDate('dd-mm-yy', dE);	
+			
+			
+			document.getElementById("AuswahlDatum").innerHTML=""+ dS + " bis "+ dE +"";
 			// start the table
 			var html = '<table >';
 
@@ -257,7 +264,7 @@ function colorLine() {
 
 function onEachFeature(feature, layer) {
 	// does this feature have a property named popupContent?
-	layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(2) + "km/h." + "<br> The Maximum is " + feature.properties[index].max.toFixed(2) + "km/h and minimum is " + feature.properties[index].min + "km/h.");
+	layer.bindPopup("The average Speed is " + feature.properties[index].avg.toFixed(1) + "km/h." + "<br> The Maximum is " + feature.properties[index].max.toFixed(1) + "km/h and minimum is " + feature.properties[index].min.toFixed(1) + "km/h.");
 };
 
 function buildJsonText(){

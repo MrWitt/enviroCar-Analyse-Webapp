@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>EnviroCar Statistics</title>
+    <title>EnviroCar Punktstatistik</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.draw/leaflet.draw.css" />
     <link rel="shortcut icon" href="https://52north.org/templates/52n-2012/favicon.ico" type="image/x-icon" />
@@ -35,7 +35,6 @@
     <div id="menu">
 
         <ul class="w3-navbar w3-blue">
-            <li><a>EnviroCar Statistics:</a></li>
             <li><a onclick="openCity('Linie');">Abfrageparameter</a></li>
 			<li><a onclick="openCity('Information');">Weitere Informationen</a></li>
         </ul>
@@ -43,7 +42,7 @@
         <div style="padding: 1vw;">
             <div style="" id="Linie" class="geometry">
                 <p>Zwischen dem
-                    <input type="text" id="dateStartLine" value="01-01-2012" > und
+                    <input type="text" id="dateStartLine" value="01-01-2016" > und
                     <input type="text" id="dateEndLine" >
                 die Wochentage <br>
                     <select id="dayStartLine">  
@@ -70,8 +69,8 @@
                     <input type="text" id="timeWindow1Line" value="00:00" />Uhr bis
                     <input type="text" id="timeWindow2Line" value="23:59" />Uhr.</p>
 					
-				    <div class="tooltip" style="z-index:3;">Stattdessen vorgefertigte Zeitfenster nutzen
-					<span class="tooltiptext"><h3>Zeitfenster</h3>Erfolgt diese Angabe, so werden vorgefertigte Rubriken der Zeitabschnitte 6-10Uhr,10-15Uhr,15-19Uhr und 19-6Uhr ausgegeben.</span>
+				    <div class="tooltip" style="z-index:3;">Stattdessen vorgefertigte Tageszeitfenster nutzen
+					<span class="tooltiptext"><h3>Tageszeitfenster</h3>Erfolgt diese Angabe, so werden vorgefertigte Rubriken der Zeitabschnitte 6-10Uhr,10-15Uhr,15-19Uhr und 19-6Uhr ausgegeben.</span>
 					</div>
 					<input type="checkbox" id="FesteZeit" value="FesteZeitfenster" onclick="hideTimeWindowText();"/>
 					
@@ -85,7 +84,7 @@
 				<p style=" bottom: 1vw; left: 11vw;">
                   <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false; document.getElementById('drawCircle').disabled = true;" value="Linie Zeichnen"/>
                     <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;document.getElementById('drawCircle').disabled = false;" value="Abbrechen" disabled />
-                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;" disabled />
+                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true; document.getElementById('drawCircle').disabled =false;" disabled />
 					<div class="tooltip" style="z-index:3; margin-left:30vw;">Hilfe 
 					<span class="tooltiptext">
 					<h3>Punkt</h3>Geschwindigkeitswerte im Toleranzbereich des Punktes werden in einer Tabelle, geordnet nach Wochentagen und Uhrzeit in Mittelwerten zusammengefasst.<br>
@@ -117,10 +116,13 @@
     </div>
     <div id="values">
         <div id=menuButton>
-            <a id="download">
-                <button class="button">Tabelle herunterladen</button>
-            </a>
-            <input type="button" id="close" onclick="hide()" value="Schließen " style="margin-left: 1vw;" />
+			<a class="button" id ="download" title="Tabelle herunterladen">
+			<img src="https://cdn2.iconfinder.com/data/icons/freecns-cumulus/16/519672-178_Download-128.png"  width="36" height="36">
+			</a>
+			<a class="button" onclick="hide()" title="Schließen">
+			<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-128.png"  width="36" height="36">
+			</a>
+			<a class="button" style="margin: 0vw 0vw 0vw 0vw;" id="AuswahlDatum"></a>
         </div>
     </div>
     <div id="values2" style="border:solid #5bbde8 2px; overflow:scroll;">
@@ -129,5 +131,4 @@
     </div>   
 
 </body>
-
 </html>

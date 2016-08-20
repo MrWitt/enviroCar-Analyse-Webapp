@@ -33,8 +33,8 @@ body {
 
 #menuButton {
     height: 3vw;
-    width: 20vw;
-    margin-left: 1vw;
+    width: 30vw;
+    margin: 0vw 0vw 0vw 1vw;
 }
 
 #loader {
@@ -104,13 +104,13 @@ li {
     left: 55%;
     z-index: 3;
     background-color: rgba(255, 255, 255, 0.8);
-    display: none;
+
 }
 #values2 {
     position: absolute;
     height: 41%;
     width: 43%;
-    top: 55%;
+    top: 56%;
     left: 56%;
     z-index: 3;
     display: none;
