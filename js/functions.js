@@ -70,8 +70,10 @@ function startRequest() {
 function loadStats() {
 
 	bufVal = document.getElementById('buffer').value;
-	var dtS = document.getElementById("dateStartLine").value;
-	var dtE = document.getElementById("dateEndLine").value;
+	var dtS = $("#dateStartLine").datepicker('getDate');
+	dtS = $.datepicker.formatDate('mm-dd-yy', dtS);
+	var dtE = $("#dateEndLine").datepicker('getDate');
+	dtE = $.datepicker.formatDate('mm-dd-yy', dtE);					
 	var dayIndexStart = document.getElementById("dayStartLine").value;
 	var dayIndexEnd = parseInt(document.getElementById("dayEndLine").value) + 1;
 	var day = allDays.slice(dayIndexStart, dayIndexEnd);
@@ -92,14 +94,8 @@ function loadStats() {
 		console.log(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv");
 		$.get(WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv", function (data) {
 			var download = WPS + "/WebProcessingService?Service=WPS&Request=Execute&Version=1.0.0&Identifier=org.envirocar.wps.StatsForPOI&DataInputs=pointOfInterest=POINT(" + latlng + ")@mimeType=application/wkt;bufferSize=" + bufVal + ";day=" + day + ";timeWindowStart=" + timeWindowStart + ";timeWindowEnd=" + timeWindowEnd + ";dateStart=" + dtS + ";dateEnd=" + dtE + "&RawDataOutput=result@mimeType=application/csv";
-			document.getElementById("download").setAttribute("href", download);
-			dS = $("#dateStartLine").datepicker('getDate');
-			dS = $.datepicker.formatDate('dd-mm-yy', dS);
-			dE = $("#dateEndLine").datepicker('getDate');
-			dE = $.datepicker.formatDate('dd-mm-yy', dE);	
-			
-			
-			document.getElementById("AuswahlDatum").innerHTML=""+ dS + " bis "+ dE +"";
+			document.getElementById("download").setAttribute("href", download);		
+			document.getElementById("AuswahlDatum").innerHTML=""+ document.getElementById("dateStartLine").value + " bis "+ document.getElementById("dateEndLine").value; +"";
 			// start the table
 			var html = '<table >';
 
