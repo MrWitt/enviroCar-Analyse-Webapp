@@ -282,4 +282,3 @@ $(function () {
 			filterCircle.setRadius($input.val());
 		}, 0);
 	});
-})
