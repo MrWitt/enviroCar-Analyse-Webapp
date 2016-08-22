@@ -131,7 +131,6 @@ function loadStats() {
 			display();
 			document.getElementById('cancelDrawCircle').disabled = true;
 			document.getElementById('polyLine').disabled = false;
-			$("#loaderText").hide("slow");
 		})
 		.fail(function () {
 			alert("error");
@@ -161,6 +160,7 @@ function display() {
 	$("#values").show('slow');
 	$("#values2").show('slow');
 	$("#loader").hide("slow");
+    $("#loaderText").hide("slow");
 }
 
 function hideTimeWindowText() {

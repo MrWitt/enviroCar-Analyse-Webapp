@@ -35,7 +35,7 @@
     <div id="menu">
 
         <ul class="w3-navbar w3-blue">
-            <li><a onclick="openCity('Linie');">Abfrageparameter</a></li>
+            <li><a onclick="openCity('Linie');">Analyseformular</a></li>
 			<li><a onclick="openCity('Information');">Weitere Informationen</a></li>
         </ul>
 
@@ -44,7 +44,7 @@
                 <p>Zwischen dem
                     <input type="text" id="dateStartLine" value="01-01-2016" > und
                     <input type="text" id="dateEndLine" >
-                die Wochentage <br>
+                , die Wochentage <br>
                     <select id="dayStartLine">  
 						<option value="1">Sonntag</option>					
                         <option selected="selected" value="2">Montag</option>
@@ -62,12 +62,12 @@
                         <option selected="selected" value="5">Donnerstag</option>
                         <option value="6">Freitag</option>
                         <option value="7">Samstag</option>
-                    </select>abfragen.
+                    </select> im Tageszeitfenster
                 </p>
 				
-                <p id="Clock">Von
+                <p id="Clock">von
                     <input type="text" id="timeWindow1Line" value="00:00" />Uhr bis
-                    <input type="text" id="timeWindow2Line" value="23:59" />Uhr.</p>
+                    <input type="text" id="timeWindow2Line" value="23:59" />Uhr, abfragen.</p>
 					
 				    <div class="tooltip" style="z-index:3;">Stattdessen vorgefertigte Tageszeitfenster nutzen
 					<span class="tooltiptext"><h3>Tageszeitfenster</h3>Erfolgt diese Angabe, so werden vorgefertigte Rubriken der Zeitabschnitte 6-10Uhr,10-15Uhr,15-19Uhr und 19-6Uhr ausgegeben.</span>
@@ -81,14 +81,16 @@
 				<input type="button" id="drawCircle" onclick="startRequest();document.getElementById('cancelDrawCircle').disabled = false; document.getElementById('polyLine').disabled =true;" value="Punkt setzen" />
 				<input type="button" id="cancelDrawCircle" onclick="map.off('click', onMapClick);filterCircle.setRadius(0); document.getElementById('cancelDrawCircle').disabled = true; document.getElementById('polyLine').disabled =false;" value="Abbrechen" disabled />
 				</p>
-				<p style=" bottom: 1vw; left: 11vw;">
+                <!--Requesting a Line ist not a feature available in this Version-->
+                <!--<p style=" bottom: 1vw; left: 11vw;">
                   <input type="button" id="polyLine" onclick="drawHandler.enable(); document.getElementById('cancelDraw').disabled = false; document.getElementById('drawCircle').disabled = true;" value="Linie Zeichnen"/>
                     <input type="button" id="cancelDraw" onclick="drawHandler.disable(); document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true;document.getElementById('drawCircle').disabled = false;" value="Abbrechen" disabled />
-                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true; document.getElementById('drawCircle').disabled =false;" disabled />
+                    <input type="button" id="polyDel" value="Linie Löschen" onclick="document.getElementById('cancelDraw').disabled = true; document.getElementById('polyDel').disabled = true; document.getElementById('drawCircle').disabled =false;" disabled />-->                
 					<div class="tooltip" style="z-index:3; margin-left:30vw;">Hilfe 
-					<span class="tooltiptext">
-					<h3>Punkt</h3>Geschwindigkeitswerte im Toleranzbereich des Punktes werden in einer Tabelle, geordnet nach Wochentagen und Uhrzeit in Mittelwerten zusammengefasst.<br>
-					<h3>Linie</h3>Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte im Toleranzbereich der gezeichneten Linie dieser zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen.</span>
+					   <span class="tooltiptext">
+					   <h3>Punkt</h3>Geschwindigkeitswerte im Toleranzbereich des Punktes werden in einer Tabelle, geordnet nach Wochentagen und Uhrzeit in Mittelwerten, zusammengefasst.<br>
+					   <!--<h3>Linie</h3>Nach erfolgreicher Abfrage werden die Geschwindigkeitswerte im Toleranzbereich der gezeichneten Linie dieser zugeordnet und Farbkodiert. Sie können dann auf die einzelnen Liniensegmente klicken und die Werte in einem erscheinenden Fenster ablesen.-->
+                        </span>
                     </div>
 									
 					<hr style="border:solid #0099FF 1px;">
