@@ -112,7 +112,7 @@ function loadStats() {
 				html += "<td>" + columns[0] + " " + "</td>";
 				html += "<td>" + columns[1] + " " + "</td>";
 				html += "<td>" + columns[2] + " " + "</td>";
-				html += "<td>" + columns[3] + " " + "</td>";
+				
 
 				// close row
 				html += "</tr>";
