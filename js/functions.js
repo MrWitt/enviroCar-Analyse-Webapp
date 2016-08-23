@@ -8,7 +8,7 @@ var dateEnd;
 var index;
 var text;
 var jsonUrl = "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics";
-var allDays = ["Weekday", "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+var allDays = ["Weekday", "1", "2", "3", "4", "5", "6","7"];
 /* String "Weekdays" inserted to fill index 0 to easify search later */
 var WMS = "http://ags.52north.org:6080";
 /* must not end with slash */
