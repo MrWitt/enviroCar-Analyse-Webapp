@@ -46,8 +46,8 @@
                     <input type="text" id="dateEndLine" >
                 , die Wochentage <br>
                     <select id="dayStartLine">  
-						<option value="1">Montag</option>					
-                        <option selected="selected" value="2">Dienstag</option>
+						<option selected="selected" value="1">Montag</option>					
+                        <option value="2">Dienstag</option>
                         <option value="3">Mittwoch</option>
                         <option value="4">Donnerstag</option>
                         <option value="5">Freitag</option>
@@ -78,8 +78,8 @@
 				<p>Toleranz:			
                     <input type="number" min="1" max="1000" step="1" style="width: 2.5vw; height:1.2vw;" id="buffer" value="20" /> m </p>
 					<p style=" bottom: 1.8vw; left: 11vw;">
-				<input type="button" id="drawCircle" onclick="startRequest();document.getElementById('cancelDrawCircle').disabled = false; document.getElementById('polyLine').disabled =true;" value="Punkt setzen" />
-				<input type="button" id="cancelDrawCircle" onclick="map.off('click', onMapClick);filterCircle.setRadius(0); document.getElementById('cancelDrawCircle').disabled = true; document.getElementById('polyLine').disabled =false;" value="Abbrechen" disabled />
+				<input type="button" id="drawCircle" onclick="startRequest();document.getElementById('cancelDrawCircle').disabled = false;" value="Punkt setzen" />
+				<input type="button" id="cancelDrawCircle" onclick="map.off('click', onMapClick);filterCircle.setRadius(0); document.getElementById('cancelDrawCircle').disabled = true;" value="Abbrechen" disabled />
 				</p>
                 <!--Requesting a Line ist not a feature available in this Version-->
                 <!--<p style=" bottom: 1vw; left: 11vw;">
