@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:mainline-alpine
 
 MAINTAINER e.h.juerrens@52north.org
 
